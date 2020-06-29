@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
-#include <conio.h>
-#include <string>
+#include "Table.h"
 
 namespace Project12 {
 
@@ -21,9 +20,7 @@ namespace Project12 {
 		Tabla_Forms(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			table = new Table;
 		}
 
 	protected:
@@ -37,10 +34,9 @@ namespace Project12 {
 				delete components;
 			}
 		}
-	public: System::Windows::Forms::DataGridView^ Table;
+	public: System::Windows::Forms::DataGridView^ Tabla;
 	public: System::Windows::Forms::Label^ TitleTable;
 	private: System::Windows::Forms::Label^ label1;
-	public:
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Button^ button3;
@@ -53,9 +49,7 @@ namespace Project12 {
 	protected:
 
 	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
+		Table* table;
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
@@ -65,7 +59,7 @@ namespace Project12 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->Table = (gcnew System::Windows::Forms::DataGridView());
+			this->Tabla = (gcnew System::Windows::Forms::DataGridView());
 			this->TitleTable = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
@@ -74,20 +68,19 @@ namespace Project12 {
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->button6 = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Table))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Tabla))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// Table
+			// Tabla
 			// 
-			this->Table->AllowUserToDeleteRows = false;
-			this->Table->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->Table->Location = System::Drawing::Point(12, 123);
-			this->Table->Name = L"Table";
-			this->Table->ReadOnly = true;
-			this->Table->RowHeadersWidth = 51;
-			this->Table->RowTemplate->Height = 24;
-			this->Table->Size = System::Drawing::Size(1357, 348);
-			this->Table->TabIndex = 0;
+			this->Tabla->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->Tabla->Location = System::Drawing::Point(12, 123);
+			this->Tabla->Name = L"Tabla";
+			this->Tabla->RowHeadersWidth = 51;
+			this->Tabla->RowTemplate->Height = 24;
+			this->Tabla->Size = System::Drawing::Size(1357, 348);
+			this->Tabla->TabIndex = 0;
+			this->Tabla->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Tabla_Forms::Table_KeyDown);
 			// 
 			// TitleTable
 			// 
@@ -119,6 +112,7 @@ namespace Project12 {
 			this->button1->TabIndex = 3;
 			this->button1->Text = L"button1";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Tabla_Forms::button1_Click);
 			// 
 			// button2
 			// 
@@ -178,11 +172,11 @@ namespace Project12 {
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->TitleTable);
-			this->Controls->Add(this->Table);
+			this->Controls->Add(this->Tabla);
 			this->Name = L"Tabla_Forms";
 			this->Text = L"Tabla_Forms";
 			this->Load += gcnew System::EventHandler(this, &Tabla_Forms::Tabla_Forms_Load);
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Table))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Tabla))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -191,5 +185,14 @@ namespace Project12 {
 	private: System::Void Tabla_Forms_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 
-	};
+	private: System::Void Table_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+	}
+		   public: void setTable(Table *t){
+			   table = t;
+		   }
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+			table->Comprobar();
+
+}
+};
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "Tabla_Forms.h"
-#include <string>
+#include "Table.h"
 
 namespace Project12 {
 
@@ -16,15 +16,14 @@ namespace Project12 {
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
+
 	public:
 		MyForm(void)
 		{
 			InitializeComponent();
 			Nro_column = 0;
 			formsTabla = gcnew Tabla_Forms();
-			//
-			//TODO: Add the constructor code here
-			//
+			table = new Table;
 		}
 
 	protected:
@@ -40,8 +39,9 @@ namespace Project12 {
 			}
 		}
 	private: System::Windows::Forms::Label^ ColumnName;
+	private: System::Windows::Forms::ComboBox^ ComboTipo;
 	protected:
-	private: System::Windows::Forms::ComboBox^ comboBox1;
+
 	private: System::Windows::Forms::Label^ ColumnType;
 	private: System::Windows::Forms::TextBox^ TxtColumnName;
 	private: System::Windows::Forms::Button^ ButtonColumnName;
@@ -62,12 +62,14 @@ namespace Project12 {
 
 
 	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-	private:
+		Table* table;
 		int Nro_column;
+
 	private: System::Windows::Forms::Label^ SavedTitle;
+	private: System::Windows::Forms::TextBox^ Dato;
+
+
+
 
 		   Tabla_Forms^ formsTabla;
 
@@ -79,7 +81,7 @@ namespace Project12 {
 		void InitializeComponent(void)
 		{
 			this->ColumnName = (gcnew System::Windows::Forms::Label());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
+			this->ComboTipo = (gcnew System::Windows::Forms::ComboBox());
 			this->ColumnType = (gcnew System::Windows::Forms::Label());
 			this->TxtColumnName = (gcnew System::Windows::Forms::TextBox());
 			this->ButtonColumnName = (gcnew System::Windows::Forms::Button());
@@ -90,6 +92,7 @@ namespace Project12 {
 			this->TxtNroColumn = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->SavedTitle = (gcnew System::Windows::Forms::Label());
+			this->Dato = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
 			// ColumnName
@@ -101,14 +104,14 @@ namespace Project12 {
 			this->ColumnName->TabIndex = 0;
 			this->ColumnName->Text = L"Column Name";
 			// 
-			// comboBox1
+			// ComboTipo
 			// 
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Numbers", L"Words", L"Letters" });
-			this->comboBox1->Location = System::Drawing::Point(12, 88);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(121, 24);
-			this->comboBox1->TabIndex = 1;
+			this->ComboTipo->FormattingEnabled = true;
+			this->ComboTipo->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"numbers", L"words", L"letters" });
+			this->ComboTipo->Location = System::Drawing::Point(12, 88);
+			this->ComboTipo->Name = L"ComboTipo";
+			this->ComboTipo->Size = System::Drawing::Size(121, 24);
+			this->ComboTipo->TabIndex = 1;
 			// 
 			// ColumnType
 			// 
@@ -128,7 +131,7 @@ namespace Project12 {
 			// 
 			// ButtonColumnName
 			// 
-			this->ButtonColumnName->Location = System::Drawing::Point(307, 87);
+			this->ButtonColumnName->Location = System::Drawing::Point(434, 88);
 			this->ButtonColumnName->Name = L"ButtonColumnName";
 			this->ButtonColumnName->Size = System::Drawing::Size(75, 23);
 			this->ButtonColumnName->TabIndex = 4;
@@ -164,7 +167,7 @@ namespace Project12 {
 			// 
 			// label1
 			// 
-			this->label1->Location = System::Drawing::Point(388, 88);
+			this->label1->Location = System::Drawing::Point(515, 89);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(84, 18);
 			this->label1->TabIndex = 0;
@@ -172,7 +175,7 @@ namespace Project12 {
 			// 
 			// TxtNroColumn
 			// 
-			this->TxtNroColumn->Location = System::Drawing::Point(478, 90);
+			this->TxtNroColumn->Location = System::Drawing::Point(605, 91);
 			this->TxtNroColumn->Name = L"TxtNroColumn";
 			this->TxtNroColumn->Size = System::Drawing::Size(84, 18);
 			this->TxtNroColumn->TabIndex = 8;
@@ -183,7 +186,7 @@ namespace Project12 {
 			this->button1->BackColor = System::Drawing::SystemColors::ActiveCaption;
 			this->button1->Location = System::Drawing::Point(12, 135);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(601, 23);
+			this->button1->Size = System::Drawing::Size(798, 23);
 			this->button1->TabIndex = 9;
 			this->button1->Text = L"Create Table";
 			this->button1->UseVisualStyleBackColor = false;
@@ -198,11 +201,19 @@ namespace Project12 {
 			this->SavedTitle->TabIndex = 10;
 			this->SavedTitle->Text = L"Saved Title:";
 			// 
+			// Dato
+			// 
+			this->Dato->Location = System::Drawing::Point(317, 88);
+			this->Dato->Name = L"Dato";
+			this->Dato->Size = System::Drawing::Size(100, 22);
+			this->Dato->TabIndex = 11;
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(625, 169);
+			this->ClientSize = System::Drawing::Size(822, 169);
+			this->Controls->Add(this->Dato);
 			this->Controls->Add(this->SavedTitle);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->TxtNroColumn);
@@ -213,7 +224,7 @@ namespace Project12 {
 			this->Controls->Add(this->ButtonColumnName);
 			this->Controls->Add(this->TxtColumnName);
 			this->Controls->Add(this->ColumnType);
-			this->Controls->Add(this->comboBox1);
+			this->Controls->Add(this->ComboTipo);
 			this->Controls->Add(this->ColumnName);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
@@ -226,20 +237,28 @@ namespace Project12 {
 
 
 
-private: System::Void time1(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void time1(System::Object^ sender, System::EventArgs^ e) {
 
 
-}
+	}
 private: System::Void ButtonColumnName_Click(System::Object^ sender, System::EventArgs^ e) {
 	Nro_column += 1;
 	TxtNroColumn->Text = Nro_column.ToString();
 	DataGridViewTextBoxColumn^ CHeader = gcnew DataGridViewTextBoxColumn;
 	CHeader->HeaderText = TxtColumnName->Text;
-	formsTabla->Table->Columns->Add(CHeader);
+	formsTabla->Tabla->Columns->Add(CHeader);
+	string type;
+	string dato;
+	MarshalString(ComboTipo->Text, type);
+	MarshalString(Dato->Text, dato);
+	table->AddColumn(type);
+	table->getColumns()->getColumn(Nro_column - 1)->Add(dato);
 	TxtColumnName->Text = "";
+	ComboTipo->Text = "";
 }
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Visible = false;
+	formsTabla->setTable(this->table);
 	formsTabla->Show();
 }
 private: System::Void ButtonTableName_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -250,5 +269,13 @@ private: System::Void ButtonTableName_Click(System::Object^ sender, System::Even
 }
 private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 }
+private: void MarshalString ( String ^ s, string& os ) {
+   using namespace Runtime::InteropServices;
+   const char* chars =
+      (const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+   os = chars;
+   Marshal::FreeHGlobal(IntPtr((void*)chars));
+}
+
 };
 }
