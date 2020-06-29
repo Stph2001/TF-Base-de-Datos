@@ -204,6 +204,7 @@ namespace Project12 {
 			this->Controls->Add(this->ColumnName);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
+			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -219,6 +220,10 @@ private: System::Void time1(System::Object^ sender, System::EventArgs^ e) {
 private: System::Void ButtonColumnName_Click(System::Object^ sender, System::EventArgs^ e) {
 	Nro_column += 1;
 	TxtNroColumn->Text = Nro_column.ToString();
+	DataGridViewTextBoxColumn^ CHeader = gcnew DataGridViewTextBoxColumn;
+	CHeader->HeaderText = TxtColumnName->Text;
+	formsTabla->Table->Columns->Add(CHeader);
+	TxtColumnName->Text = "";
 }
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Visible = false;
@@ -227,6 +232,8 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 private: System::Void ButtonTableName_Click(System::Object^ sender, System::EventArgs^ e) {
 	formsTabla->TitleTable->Text = TxtTableName->Text;
 	TxtTableName->Text = "";
+}
+private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

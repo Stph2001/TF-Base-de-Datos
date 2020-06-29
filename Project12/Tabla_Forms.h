@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+#include <conio.h>
+#include <string>
 
 namespace Project12 {
 
@@ -34,7 +37,7 @@ namespace Project12 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::DataGridView^ Table;
+	public: System::Windows::Forms::DataGridView^ Table;
 	public: System::Windows::Forms::Label^ TitleTable;
 
 	protected:
@@ -61,12 +64,14 @@ namespace Project12 {
 			// 
 			// Table
 			// 
+			this->Table->AllowUserToDeleteRows = false;
 			this->Table->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->Table->Location = System::Drawing::Point(12, 29);
 			this->Table->Name = L"Table";
+			this->Table->ReadOnly = true;
 			this->Table->RowHeadersWidth = 51;
 			this->Table->RowTemplate->Height = 24;
-			this->Table->Size = System::Drawing::Size(404, 183);
+			this->Table->Size = System::Drawing::Size(1357, 348);
 			this->Table->TabIndex = 0;
 			// 
 			// TitleTable
@@ -84,16 +89,19 @@ namespace Project12 {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(428, 226);
+			this->ClientSize = System::Drawing::Size(1381, 389);
 			this->Controls->Add(this->TitleTable);
 			this->Controls->Add(this->Table);
 			this->Name = L"Tabla_Forms";
 			this->Text = L"Tabla_Forms";
+			this->Load += gcnew System::EventHandler(this, &Tabla_Forms::Tabla_Forms_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->Table))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+	private: System::Void Tabla_Forms_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
 	};
 }
