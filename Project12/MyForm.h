@@ -67,7 +67,9 @@ namespace Project12 {
 		/// </summary>
 	private:
 		int Nro_column;
-		Tabla_Forms^ formsTabla;
+	private: System::Windows::Forms::Label^ SavedTitle;
+
+		   Tabla_Forms^ formsTabla;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -87,6 +89,7 @@ namespace Project12 {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->TxtNroColumn = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->SavedTitle = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// ColumnName
@@ -120,12 +123,12 @@ namespace Project12 {
 			// 
 			this->TxtColumnName->Location = System::Drawing::Point(147, 88);
 			this->TxtColumnName->Name = L"TxtColumnName";
-			this->TxtColumnName->Size = System::Drawing::Size(93, 22);
+			this->TxtColumnName->Size = System::Drawing::Size(154, 22);
 			this->TxtColumnName->TabIndex = 3;
 			// 
 			// ButtonColumnName
 			// 
-			this->ButtonColumnName->Location = System::Drawing::Point(257, 87);
+			this->ButtonColumnName->Location = System::Drawing::Point(307, 87);
 			this->ButtonColumnName->Name = L"ButtonColumnName";
 			this->ButtonColumnName->Size = System::Drawing::Size(75, 23);
 			this->ButtonColumnName->TabIndex = 4;
@@ -146,12 +149,12 @@ namespace Project12 {
 			// 
 			this->TxtTableName->Location = System::Drawing::Point(14, 34);
 			this->TxtTableName->Name = L"TxtTableName";
-			this->TxtTableName->Size = System::Drawing::Size(100, 22);
+			this->TxtTableName->Size = System::Drawing::Size(206, 22);
 			this->TxtTableName->TabIndex = 6;
 			// 
 			// ButtonTableName
 			// 
-			this->ButtonTableName->Location = System::Drawing::Point(129, 33);
+			this->ButtonTableName->Location = System::Drawing::Point(226, 33);
 			this->ButtonTableName->Name = L"ButtonTableName";
 			this->ButtonTableName->Size = System::Drawing::Size(75, 23);
 			this->ButtonTableName->TabIndex = 7;
@@ -161,15 +164,15 @@ namespace Project12 {
 			// 
 			// label1
 			// 
-			this->label1->Location = System::Drawing::Point(344, 67);
+			this->label1->Location = System::Drawing::Point(388, 88);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(84, 18);
 			this->label1->TabIndex = 0;
-			this->label1->Text = L"N Columns";
+			this->label1->Text = L"N Columns:";
 			// 
 			// TxtNroColumn
 			// 
-			this->TxtNroColumn->Location = System::Drawing::Point(344, 87);
+			this->TxtNroColumn->Location = System::Drawing::Point(478, 90);
 			this->TxtNroColumn->Name = L"TxtNroColumn";
 			this->TxtNroColumn->Size = System::Drawing::Size(84, 18);
 			this->TxtNroColumn->TabIndex = 8;
@@ -180,17 +183,27 @@ namespace Project12 {
 			this->button1->BackColor = System::Drawing::SystemColors::ActiveCaption;
 			this->button1->Location = System::Drawing::Point(12, 135);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(416, 23);
+			this->button1->Size = System::Drawing::Size(601, 23);
 			this->button1->TabIndex = 9;
 			this->button1->Text = L"Create Table";
 			this->button1->UseVisualStyleBackColor = false;
 			this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
 			// 
+			// SavedTitle
+			// 
+			this->SavedTitle->AutoSize = true;
+			this->SavedTitle->Location = System::Drawing::Point(345, 22);
+			this->SavedTitle->Name = L"SavedTitle";
+			this->SavedTitle->Size = System::Drawing::Size(83, 17);
+			this->SavedTitle->TabIndex = 10;
+			this->SavedTitle->Text = L"Saved Title:";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(440, 170);
+			this->ClientSize = System::Drawing::Size(625, 169);
+			this->Controls->Add(this->SavedTitle);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->TxtNroColumn);
 			this->Controls->Add(this->label1);
@@ -230,7 +243,9 @@ private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e
 	formsTabla->Show();
 }
 private: System::Void ButtonTableName_Click(System::Object^ sender, System::EventArgs^ e) {
+	SavedTitle->Text = "Saved Title:";
 	formsTabla->TitleTable->Text = TxtTableName->Text;
+	SavedTitle->Text = SavedTitle->Text + " " + TxtTableName->Text;
 	TxtTableName->Text = "";
 }
 private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
