@@ -49,5 +49,6 @@ public:
 	void setName(string name) {
 		ColumnName = name;
 	}
+	virtual int Length() { return 0; }
 };
 

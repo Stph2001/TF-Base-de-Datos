@@ -35,8 +35,11 @@ public:
 	}
 	void Print() override{
 		for (auto c : *chars) {
-			cout << c<<" ";
+			cout << c<<"\n";
 		}
+	}
+	int Length() override{
+		return chars->size();
 	}
 };
 

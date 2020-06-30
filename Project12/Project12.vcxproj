@@ -118,27 +118,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="Tabla_Forms.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArbolAVL.h" />
     <ClInclude Include="ArrayColumn.h" />
     <ClInclude Include="Column.h" />
     <ClInclude Include="ColumnChar.h" />
     <ClInclude Include="ColumnDouble.h" />
     <ClInclude Include="ColumnString.h" />
-    <ClInclude Include="MyForm.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
+    <ClInclude Include="Rows.h" />
     <ClInclude Include="Tabla_Forms.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Table.h" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MyForm.resx">
-      <DependentUpon>MyForm.h</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Tabla_Forms.resx">
       <DependentUpon>Tabla_Forms.h</DependentUpon>
     </EmbeddedResource>

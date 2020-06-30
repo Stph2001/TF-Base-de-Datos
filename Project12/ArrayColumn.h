@@ -49,5 +49,8 @@ public:
 	void AddChar(char a, int i){
 		columns[i]->Add(a);
 	}
+	int Lenght(){
+		return nColumns;
+	}
 };
 
