@@ -14,16 +14,17 @@ private:
 	AvlTree<T>* avlTree;
 
 public:
-	Column(){
+	Column() {
 		datas = new list<T>();
 		avlTree = nullptr;
 	}
-	~Column(){
+	~Column() {
 		delete datas;
 
 	}
 	void Add(T elem) {
 		datas->push_back(elem);
+		if (avlTree != nullptr) avlTree->Add(elem);
 	}
 	void AddStart(T elem) {
 		datas->push_front(elem);
@@ -43,27 +44,39 @@ public:
 	void Modify(char elem, int pos) {
 
 	}
-	void Print(){
+	void Print() {
 		for (auto c : *datas)
-			cout << c<<"\n";
+			cout << c << "\n";
 	}
-	int Length(){
+	int Length() {
 		return datas->size();
 	}
-	void Index() {
-		generateTree();
+	void Index(function<double(T)> c) {
+		generateTree(c);
 		for (T c : *datas)
 			avlTree->Add(c);
 	}
-	T Search(T elem){
+	T Search(T elem) {
 		if (avlTree != nullptr) return avlTree->Search(elem);
 		return 0;
 	}
-	void generateTree(){
-		if (avlTree == nullptr)
-			avlTree = new AvlTree<T>();
+	list<T>* Equals(T elem) {
+		if (avlTree != nullptr) return avlTree->Equals(elem);
+		return new list<T>();
 	}
-	void deleteTree(){
+	list<T>* GreaterThan(T elem) {
+		if (avlTree != nullptr) return avlTree->GreaterThan(elem);
+		return new list<T>();
+	}
+	list<T>* LessThan(T elem) {
+		if (avlTree != nullptr) return avlTree->LessThan(elem);
+		return new list<T>();
+	}
+	void generateTree(function<double(T)> c) {
+		if (avlTree == nullptr)
+			avlTree = new AvlTree<T>(c);
+	}
+	void deleteTree() {
 		if (avlTree == nullptr) return;
 		if (avlTree->Length() <= 0) return;
 		avlTree->Clear();

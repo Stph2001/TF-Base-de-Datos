@@ -33,8 +33,20 @@ public:
 	T Search(T elem, int pos){
 		return columns[pos]->Search(elem);
 	}
-	void IndexColumn(int pos){
-		columns[pos]->Index();
+	list<T>* GreaterThan(T elem, int pos){
+		return columns[pos]->GreaterThan(elem);
+	}
+	list<T>* LessThan(T elem, int pos){
+		return columns[pos]->LessThan(elem);
+	}
+	list<T>* Equals(T elem, int pos) {
+		return columns[pos]->Equals(elem);
+	}
+	void IndexColumn(int pos, function<double(T)> c){
+		columns[pos]->Index(c);
+	}
+	void RemoveIndexColumn(int pos){
+		columns[pos]->deleteTree();
 	}
 	void PrintColumn(int pos){
 		columns[pos]->Print();

@@ -431,22 +431,22 @@ namespace Project12 {
 			int n = 0;
 			MarshalString(Dato->Text, d);
 
-			if (d == "letters"){
+			if (ComboTipo->Text == "letters"){
 				char data = d[0];
-				n = (Tabla->RowCount <= table->getCharColumns()->getColumn(nColumn - 1)->Length() ?
-					Tabla->Rows->Add() : table->getCharColumns()->getColumn(nColumn - 1)->Length());
-				table->getCharColumns()->getColumn(nColumn - 1)->Add(data);
+				n = (Tabla->RowCount <= table->getCharColumns()->getColumn(table->getCharColumns()->Length() - 1)->Length() ?
+					Tabla->Rows->Add() : table->getCharColumns()->getColumn(table->getCharColumns()->Length() - 1)->Length());
+				table->getCharColumns()->getColumn(table->getCharColumns()->Length() - 1)->Add(data);
 			}
-			else if (d == "words"){
-				n = (Tabla->RowCount <= table->getStringColumns()->getColumn(nColumn - 1)->Length() ?
-					Tabla->Rows->Add() : table->getStringColumns()->getColumn(nColumn - 1)->Length());
-				table->getStringColumns()->getColumn(nColumn - 1)->Add(d);
+			else if (ComboTipo->Text == "words"){
+				n = (Tabla->RowCount <= table->getStringColumns()->getColumn(table->getStringColumns()->Length() - 1)->Length() ?
+					Tabla->Rows->Add() : table->getStringColumns()->getColumn(table->getStringColumns()->Length() - 1)->Length());
+				table->getStringColumns()->getColumn(table->getStringColumns()->Length() - 1)->Add(d);
 			}
 			else{
 				double data = atoi(d.c_str());
-				n = (Tabla->RowCount <= table->getDoubleColumns()->getColumn(nColumn - 1)->Length() ?
-					Tabla->Rows->Add() : table->getDoubleColumns()->getColumn(nColumn - 1)->Length());
-				table->getDoubleColumns()->getColumn(nColumn - 1)->Add(data);
+				n = (Tabla->RowCount <= table->getDoubleColumns()->getColumn(table->getDoubleColumns()->Length() - 1)->Length() ?
+					Tabla->Rows->Add() : table->getDoubleColumns()->getColumn(table->getDoubleColumns()->Length() - 1)->Length());
+				table->getDoubleColumns()->getColumn(table->getDoubleColumns()->Length() - 1)->Add(data);
 			}
 			Tabla->Rows[n]->Cells[nColumn - 1]->Value = Dato->Text;
 			Dato->Text = "";
