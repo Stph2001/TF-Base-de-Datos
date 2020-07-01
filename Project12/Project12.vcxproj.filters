@@ -29,22 +29,13 @@
     <ClInclude Include="Column.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ColumnChar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ColumnString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ArrayColumn.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ColumnDouble.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rows.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ArbolAVL.h">
+    <ClInclude Include="AvlTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

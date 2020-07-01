@@ -1,12 +1,11 @@
 #pragma once
-#include "ColumnChar.h"
-#include "ColumnString.h"
-#include "ColumnDouble.h"
+#include "Column.h"
 
-class ArrayColumn
+template<typename T>
+class ArrayColumn 
 {
 private:
-	Column** columns;
+	Column<T>** columns;
 	int nColumns;
 
 public:
@@ -14,42 +13,39 @@ public:
 		nColumns = 0;
 	}
 	~ArrayColumn(){
-
+		if (nColumns > 0) {
+			for (int i = 0; i < nColumns; i++)
+				delete columns[i];
+			delete columns;
+			nColumns = 0;
+		}
+		deleteTree();
 	}
-	void AddColumn(string type){
-		Column** aux = new Column * [nColumns + 1];
+	void AddColumn(){
+		Column<T>** aux = new Column<T> * [nColumns + 1];
 		if (nColumns>0)
 			for (int i = 0; i < nColumns; i++)
 				aux[i] = columns[i];
-		
-		if (type == "letters"){
-			aux[nColumns] = new ColumnChar();
-		}
-		else if (type == "words"){
-			aux[nColumns] = new ColumnString();
-		}
-		else {
-			aux[nColumns] = new ColumnDouble();
-		}
+		aux[nColumns] = new Column<T>();
 		nColumns++;
 		columns = aux;
+	}
+	T Search(T elem, int pos){
+		return columns[pos]->Search(elem);
+	}
+	void IndexColumn(int pos){
+		columns[pos]->Index();
 	}
 	void PrintColumn(int pos){
 		columns[pos]->Print();
 	}
-	Column *getColumn(int pos){
+	Column<T> *getColumn(int pos){
 		return columns[pos];
 	}
-	void AddDouble(double a, int i){
-		columns[i]->Add(a);
+	void AddToColumn(T elem, int pos){
+		columns[pos]->Add(elem);
 	}
-	void AddString(string a, int i){
-		columns[i]->Add(a);
-	}
-	void AddChar(char a, int i){
-		columns[i]->Add(a);
-	}
-	int Lenght(){
+	int Length(){
 		return nColumns;
 	}
 };

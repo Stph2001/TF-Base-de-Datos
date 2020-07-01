@@ -40,7 +40,8 @@ namespace Project12 {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button3;
+	private: System::Windows::Forms::Button^ Filtrar;
+
 	private: System::Windows::Forms::Button^ button4;
 	private: System::Windows::Forms::Button^ button5;
 	private: System::Windows::Forms::Button^ button6;
@@ -57,7 +58,7 @@ namespace Project12 {
 	private: System::Windows::Forms::Panel^ panel2;
 	private: System::Windows::Forms::Button^ button7;
 	private: System::Windows::Forms::TextBox^ Dato;
-	private: System::Windows::Forms::Label^ SavedTitle;
+
 	private: System::Windows::Forms::Button^ button8;
 	private: System::Windows::Forms::Label^ TxtNroColumn;
 	private: System::Windows::Forms::Label^ label2;
@@ -84,7 +85,7 @@ namespace Project12 {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
+			this->Filtrar = (gcnew System::Windows::Forms::Button());
 			this->button4 = (gcnew System::Windows::Forms::Button());
 			this->button5 = (gcnew System::Windows::Forms::Button());
 			this->button6 = (gcnew System::Windows::Forms::Button());
@@ -93,7 +94,6 @@ namespace Project12 {
 			this->Datos = (gcnew System::Windows::Forms::Label());
 			this->button7 = (gcnew System::Windows::Forms::Button());
 			this->Dato = (gcnew System::Windows::Forms::TextBox());
-			this->SavedTitle = (gcnew System::Windows::Forms::Label());
 			this->button8 = (gcnew System::Windows::Forms::Button());
 			this->TxtNroColumn = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -119,7 +119,7 @@ namespace Project12 {
 			this->Tabla->Name = L"Tabla";
 			this->Tabla->RowHeadersWidth = 51;
 			this->Tabla->RowTemplate->Height = 24;
-			this->Tabla->Size = System::Drawing::Size(1357, 227);
+			this->Tabla->Size = System::Drawing::Size(1357, 276);
 			this->Tabla->TabIndex = 0;
 			this->Tabla->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Tabla_Forms::Table_KeyDown);
 			// 
@@ -128,7 +128,7 @@ namespace Project12 {
 			this->TitleTable->AutoSize = true;
 			this->TitleTable->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic)),
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->TitleTable->Location = System::Drawing::Point(613, 3);
+			this->TitleTable->Location = System::Drawing::Point(597, 56);
 			this->TitleTable->Name = L"TitleTable";
 			this->TitleTable->RightToLeft = System::Windows::Forms::RightToLeft::No;
 			this->TitleTable->Size = System::Drawing::Size(87, 39);
@@ -139,7 +139,7 @@ namespace Project12 {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(12, 32);
+			this->label1->Location = System::Drawing::Point(9, 3);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(61, 17);
 			this->label1->TabIndex = 2;
@@ -147,7 +147,7 @@ namespace Project12 {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(15, 53);
+			this->button1->Location = System::Drawing::Point(12, 24);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(91, 23);
 			this->button1->TabIndex = 3;
@@ -157,25 +157,26 @@ namespace Project12 {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(15, 82);
+			this->button2->Location = System::Drawing::Point(271, 24);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(75, 23);
 			this->button2->TabIndex = 4;
 			this->button2->Text = L"button2";
 			this->button2->UseVisualStyleBackColor = true;
 			// 
-			// button3
+			// Filtrar
 			// 
-			this->button3->Location = System::Drawing::Point(112, 53);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(75, 23);
-			this->button3->TabIndex = 5;
-			this->button3->Text = L"button3";
-			this->button3->UseVisualStyleBackColor = true;
+			this->Filtrar->Location = System::Drawing::Point(109, 24);
+			this->Filtrar->Name = L"Filtrar";
+			this->Filtrar->Size = System::Drawing::Size(75, 23);
+			this->Filtrar->TabIndex = 5;
+			this->Filtrar->Text = L"Filtrar";
+			this->Filtrar->UseVisualStyleBackColor = true;
+			this->Filtrar->Click += gcnew System::EventHandler(this, &Tabla_Forms::Filtrar_Click);
 			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(96, 82);
+			this->button4->Location = System::Drawing::Point(352, 24);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(75, 23);
 			this->button4->TabIndex = 6;
@@ -184,7 +185,7 @@ namespace Project12 {
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(193, 53);
+			this->button5->Location = System::Drawing::Point(190, 24);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(75, 23);
 			this->button5->TabIndex = 7;
@@ -193,7 +194,7 @@ namespace Project12 {
 			// 
 			// button6
 			// 
-			this->button6->Location = System::Drawing::Point(177, 82);
+			this->button6->Location = System::Drawing::Point(433, 24);
 			this->button6->Name = L"button6";
 			this->button6->Size = System::Drawing::Size(75, 23);
 			this->button6->TabIndex = 8;
@@ -207,14 +208,14 @@ namespace Project12 {
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Controls->Add(this->button1);
 			this->panel1->Controls->Add(this->button2);
-			this->panel1->Controls->Add(this->button3);
+			this->panel1->Controls->Add(this->Filtrar);
 			this->panel1->Controls->Add(this->button4);
 			this->panel1->Controls->Add(this->button5);
 			this->panel1->Controls->Add(this->button6);
 			this->panel1->Dock = System::Windows::Forms::DockStyle::Bottom;
-			this->panel1->Location = System::Drawing::Point(0, 133);
+			this->panel1->Location = System::Drawing::Point(0, 87);
 			this->panel1->Name = L"panel1";
-			this->panel1->Size = System::Drawing::Size(1382, 350);
+			this->panel1->Size = System::Drawing::Size(1382, 396);
 			this->panel1->TabIndex = 9;
 			// 
 			// panel2
@@ -222,7 +223,6 @@ namespace Project12 {
 			this->panel2->Controls->Add(this->Datos);
 			this->panel2->Controls->Add(this->button7);
 			this->panel2->Controls->Add(this->Dato);
-			this->panel2->Controls->Add(this->SavedTitle);
 			this->panel2->Controls->Add(this->button8);
 			this->panel2->Controls->Add(this->TxtNroColumn);
 			this->panel2->Controls->Add(this->label2);
@@ -237,7 +237,7 @@ namespace Project12 {
 			this->panel2->Dock = System::Windows::Forms::DockStyle::Top;
 			this->panel2->Location = System::Drawing::Point(0, 0);
 			this->panel2->Name = L"panel2";
-			this->panel2->Size = System::Drawing::Size(1382, 133);
+			this->panel2->Size = System::Drawing::Size(1382, 137);
 			this->panel2->TabIndex = 10;
 			// 
 			// Datos
@@ -265,15 +265,6 @@ namespace Project12 {
 			this->Dato->Name = L"Dato";
 			this->Dato->Size = System::Drawing::Size(190, 22);
 			this->Dato->TabIndex = 25;
-			// 
-			// SavedTitle
-			// 
-			this->SavedTitle->AutoSize = true;
-			this->SavedTitle->Location = System::Drawing::Point(348, 18);
-			this->SavedTitle->Name = L"SavedTitle";
-			this->SavedTitle->Size = System::Drawing::Size(83, 17);
-			this->SavedTitle->TabIndex = 24;
-			this->SavedTitle->Text = L"Saved Title:";
 			// 
 			// button8
 			// 
@@ -412,13 +403,10 @@ namespace Project12 {
 		MarshalString(ComboTipo->Text, type);
 		table->AddColumn(type);
 		TxtColumnName->Text = "";
-		ComboTipo->Text = "";
 		Datos->Text = Datos->Text + " " + nColumn;
 	}
 	private: System::Void ButtonTableName_Click(System::Object^ sender, System::EventArgs^ e) {
-		SavedTitle->Text = "Saved Title:";
 		this->TitleTable->Text = TxtTableName->Text;
-		SavedTitle->Text = SavedTitle->Text + " " + TxtTableName->Text;
 		TxtTableName->Text = "";
 	}
 	private: void MarshalString(String^ s, string& os) {
@@ -430,7 +418,7 @@ namespace Project12 {
 	}
 	private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
 		setActivePanel(panel2->Name);
-		
+		panel1->Dock = DockStyle::Fill;
 	}
 	private: void setActivePanel(String^ panelName) {
 		this->panel2->Visible = panel2->Name == panelName;
@@ -439,20 +427,33 @@ namespace Project12 {
 
 	private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (nColumn > 0) {
-			string dato;
-			MarshalString(Dato->Text, dato);
-			
+			string d;
 			int n = 0;
+			MarshalString(Dato->Text, d);
 
-			n = (Tabla->RowCount <= table->getColumns()->getColumn(nColumn - 1)->Length() ? 
-			Tabla->Rows->Add() : table->getColumns()->getColumn(nColumn - 1)->Length());
-
-			table->getColumns()->getColumn(nColumn - 1)->Add(dato);
-
+			if (d == "letters"){
+				char data = d[0];
+				n = (Tabla->RowCount <= table->getCharColumns()->getColumn(nColumn - 1)->Length() ?
+					Tabla->Rows->Add() : table->getCharColumns()->getColumn(nColumn - 1)->Length());
+				table->getCharColumns()->getColumn(nColumn - 1)->Add(data);
+			}
+			else if (d == "words"){
+				n = (Tabla->RowCount <= table->getStringColumns()->getColumn(nColumn - 1)->Length() ?
+					Tabla->Rows->Add() : table->getStringColumns()->getColumn(nColumn - 1)->Length());
+				table->getStringColumns()->getColumn(nColumn - 1)->Add(d);
+			}
+			else{
+				double data = atoi(d.c_str());
+				n = (Tabla->RowCount <= table->getDoubleColumns()->getColumn(nColumn - 1)->Length() ?
+					Tabla->Rows->Add() : table->getDoubleColumns()->getColumn(nColumn - 1)->Length());
+				table->getDoubleColumns()->getColumn(nColumn - 1)->Add(data);
+			}
 			Tabla->Rows[n]->Cells[nColumn - 1]->Value = Dato->Text;
-
 			Dato->Text = "";
 		}
 	}
+
+private: System::Void Filtrar_Click(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }

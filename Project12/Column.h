@@ -2,53 +2,73 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include "AvlTree.h"
 using namespace std;
 
+template<typename T>
 class Column
 {
-protected:
+private:
 	string ColumnName;
+	list<T>* datas;
+	AvlTree<T>* avlTree;
 
 public:
 	Column(){
-		
+		datas = new list<T>();
+		avlTree = nullptr;
 	}
 	~Column(){
+		delete datas;
 
 	}
-	virtual void Add(char elem) {}
-	virtual void Add(string elem) {}
-	virtual void Add(double elem) {}
-
-	virtual void AddStart(char elem) {}
-	virtual void AddStart(string elem) {}
-	virtual void AddStart(double elem) {}
-
-	virtual void AddPosition(char elem, int pos) {}
-	virtual void AddPosition(string elem, int pos) {}
-	virtual void AddPosition(double elem, int pos) {}
-
-	virtual void Remove(char elem) {}
-	virtual void Remove(string elem) {}
-	virtual void Remove(double elem) {}
-
-	virtual void RemoveStart(char elem) {}
-	virtual void RemoveStart(string elem) {}
-	virtual void RemoveStart(double elem) {}
-
-	virtual void RemovePosition(char elem, int pos) {}
-	virtual void RemovePosition(string elem, int pos) {}
-	virtual void RemovePosition(double elem, int pos) {}
-
-	virtual void Modify(char elem, int pos) {}
-	virtual void Modify(string elem, int pos) {}
-	virtual void Modify(double elem, int pos) {}
-
-	virtual void Print(){}
-
-	void setName(string name) {
-		ColumnName = name;
+	void Add(T elem) {
+		datas->push_back(elem);
 	}
-	virtual int Length() { return 0; }
+	void AddStart(T elem) {
+		datas->push_front(elem);
+	}
+	void AddPosition(T elem, int pos) {
+
+	}
+	void Remove(char elem) {
+
+	}
+	void RemoveStart(char elem) {
+
+	}
+	void RemovePosition(char elem, int pos) {
+
+	}
+	void Modify(char elem, int pos) {
+
+	}
+	void Print(){
+		for (auto c : *datas)
+			cout << c<<"\n";
+	}
+	int Length(){
+		return datas->size();
+	}
+	void Index() {
+		generateTree();
+		for (T c : *datas)
+			avlTree->Add(c);
+	}
+	T Search(T elem){
+		if (avlTree != nullptr) return avlTree->Search(elem);
+		return 0;
+	}
+	void generateTree(){
+		if (avlTree == nullptr)
+			avlTree = new AvlTree<T>();
+	}
+	void deleteTree(){
+		if (avlTree == nullptr) return;
+		if (avlTree->Length() <= 0) return;
+		avlTree->Clear();
+		delete avlTree;
+		avlTree = nullptr;
+	}
 };
 
