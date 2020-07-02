@@ -69,6 +69,14 @@ public:
 	list<string>* EndWithString(string searcher, int pos) { return stringColumns->EndWith(searcher, pos); }
 	list<double>* EndWithDouble(string searcher, int pos) { return doubleColumns->EndWith(searcher, pos); }
 
+	list<char>* InOrderChar(int pos) { return charColumns->InOrder(pos); }
+	list<string>* InOrderString(int pos) { return stringColumns->InOrder(pos); }
+	list<double>* InOrderDouble(int pos) { return doubleColumns->InOrder(pos); }
+
+	list<char>* InReverseChar(int pos) { return charColumns->InReverse(pos); }
+	list<string>* InReverseString(int pos) { return stringColumns->InReverse(pos); }
+	list<double>* InReverseDouble(int pos) { return doubleColumns->InReverse(pos); }
+
 	void Index(string type, int pos){
 		if (type == "letters")
 			charColumns->IndexColumn(pos, 
@@ -174,7 +182,10 @@ public:
 			cout << "\n\n[8] Buscar todos los datos mayores a:";
 			cout << "\n\n[9] Buscar todos los datos menores a:";
 			cout << "\n\n[10] Buscar todos los datos que empiezan con:";
-			cout << "\n\n[11] Buscar todos los datos que finalizan con:\n\n";
+			cout << "\n\n[11] Buscar todos los datos que finalizan con:";
+			cout << "\n\n[12] Ordenar ascendentemente:";
+			cout << "\n\n[13] Ordenar descendentemente:\n\n";
+
 			cin >> op;
 			Console::Clear();
 			if (op == 1) {
@@ -426,6 +437,56 @@ public:
 					}
 				}
 				_getch();
+			}
+			else if (op == 12) {
+				string tipo;
+				int p;
+				cout << "Ingrese tipo de columna a ordenar: ";
+				cin >> tipo;
+				cout << "Ingrese indice de la columna: ";
+				cin >> p;
+				cout << "\n";
+				if (tipo == "words") {
+					for (string s : *InOrderString(p)) {
+						cout << s << " ";
+					}
+				}
+				else if (tipo == "letters") {
+					for (char s : *InOrderChar(p)) {
+						cout << s << " ";
+					}
+				}
+				else {
+					for (double s : *InOrderDouble(p)) {
+						cout << s << " ";
+					}
+				}
+				_getch();
+			}
+			else if (op == 13) {
+			string tipo;
+			int p;
+			cout << "Ingrese tipo de columna a ordenar: ";
+			cin >> tipo;
+			cout << "Ingrese indice de la columna: ";
+			cin >> p;
+			cout << "\n";
+			if (tipo == "words") {
+				for (string s : *InReverseString(p)) {
+					cout << s << " ";
+				}
+			}
+			else if (tipo == "letters") {
+				for (char s : *InReverseChar(p)) {
+					cout << s << " ";
+				}
+			}
+			else {
+				for (double s : *InReverseDouble(p)) {
+					cout << s << " ";
+				}
+			}
+			_getch();
 			}
 		}
 	}

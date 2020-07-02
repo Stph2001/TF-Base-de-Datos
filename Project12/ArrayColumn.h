@@ -48,8 +48,14 @@ public:
 	list<T>* EndWith(string searcher, int pos) {
 		return columns[pos]->EndWith(searcher);
 	}
+	list<T>* InOrder(int pos) {
+		return columns[pos]->InOrder();
+	}
+	list<T>* InReverse(int pos) {
+		return columns[pos]->InReverse();
+	}
 	void IndexColumn(int pos, function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e){
-		columns[pos]->Index(c,s, e);
+		columns[pos]->Index(c,s,e);
 	}
 	void RemoveIndexColumn(int pos){
 		columns[pos]->deleteTree();

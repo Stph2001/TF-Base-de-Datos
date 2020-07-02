@@ -23,7 +23,7 @@ public:
 	}
 	void Add(T elem) {
 		datas->push_back(elem);
-		if (avlTree != nullptr) avlTree->Add(elem);
+		if (avlTree != nullptr) avlTree->Add(elem, datas->size() - 1);
 	}
 	void AddStart(T elem) {
 		datas->push_front(elem);
@@ -52,8 +52,8 @@ public:
 	}
 	void Index(function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e) {
 		generateTree(c,s,e);
-		for (T c : *datas)
-			avlTree->Add(c);
+		for (T p : *datas)
+			avlTree->Add(p, datas->size() - 1);
 	}
 	T Search(T elem) {
 		if (avlTree != nullptr) return avlTree->Search(elem);
@@ -77,6 +77,14 @@ public:
 	}
 	list<T>* EndWith(string searcher) {
 		if (avlTree != nullptr) return avlTree->EndWith(searcher);
+		return new list<T>();
+	}
+	list<T>* InOrder() {
+		if (avlTree != nullptr) return avlTree->InOrder();
+		return new list<T>();
+	}
+	list<T>* InReverse() {
+		if (avlTree != nullptr) return avlTree->InReverse();
 		return new list<T>();
 	}
 	void generateTree(function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e) {

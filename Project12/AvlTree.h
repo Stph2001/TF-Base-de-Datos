@@ -12,7 +12,8 @@ struct Node {
 	Node<T>* Right;
 	Node<T>* Left;
 	int height;
-	Node(T elem) :elem(elem), height(0),Left(nullptr), Right(nullptr) {}
+	int Row;
+	Node(T elem, int row) : elem(elem), height(0), Left(nullptr), Right(nullptr), Row(row) {}
 };
 
 template<typename T>
@@ -38,8 +39,9 @@ public:
 	}
 	void Clear() { clear(root); }
 	int Length() { return length; }
-	void Add(T elem) { add(root, elem); }
+	void Add(T elem, int row) { add(root, elem, row); }
 	T Search(T elem) { return search(root, elem); }
+
 	list<T>* Equals(T elem) {
 		list<T>* elems = new list<T>();
 		equals(root, elem, elems);
@@ -65,6 +67,16 @@ public:
 		endWith(root, searcher, elems);
 		return elems;
 	}
+	list<T>* InOrder() {
+		list<T>* elems = new list<T>();
+		inOrder(root, elems);
+		return elems;
+	}
+	list<T>* InReverse() {
+		list<T>* elems = new list<T>();
+		inReverse(root, elems);
+		return elems;
+	}
 
 private:
 	void clear(Node<T> *&node) {
@@ -78,19 +90,13 @@ private:
 	int height(Node<T> *&node){
 		return node == nullptr ? 0 : node->height;
 	}
-	void add(Node<T> *&node, T elem){
+	void add(Node<T> *&node, T elem, int row){
 		if (node == nullptr){
-			node = new Node<T>(elem);
+			node = new Node<T>(elem, row);
 			length++;
 		}
 		else{
-			add(compare(elem, node->elem) == -1 ? node->Left : node->Right, elem);
-			/*if (compare(elem) < compare(node->elem)){
-				add(node->Left, elem);
-			}
-			else{
-				add(node->Right, elem);
-			}*/
+			add(compare(elem, node->elem) == -1 ? node->Left : node->Right, elem, row);
 			balance(node);
 		}
 	}
@@ -201,5 +207,17 @@ private:
 		if (checkEnd(searcher, node->elem)) elems->push_back(node->elem);
 		endWith(node->Right, searcher, elems);
 		endWith(node->Left, searcher,elems);
+	}
+	void inOrder(Node<T> *&node, list<T>* elems) {
+		if (node == nullptr) return;
+		inOrder(node->Left, elems);
+		elems->push_back(node->elem);
+		inOrder(node->Right, elems);
+	}
+	void inReverse(Node<T>*& node, list<T>* elems) {
+		if (node == nullptr) return;
+		inOrder(node->Right, elems);
+		elems->push_back(node->elem);
+		inOrder(node->Left,elems);
 	}
 };
