@@ -1,6 +1,5 @@
 #pragma once
 #include <list>
-#include <string>
 #include <iostream>
 #include "AvlTree.h"
 using namespace std;
@@ -51,8 +50,8 @@ public:
 	int Length() {
 		return datas->size();
 	}
-	void Index(function<double(T)> c) {
-		generateTree(c);
+	void Index(function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e) {
+		generateTree(c,s,e);
 		for (T c : *datas)
 			avlTree->Add(c);
 	}
@@ -72,9 +71,17 @@ public:
 		if (avlTree != nullptr) return avlTree->LessThan(elem);
 		return new list<T>();
 	}
-	void generateTree(function<double(T)> c) {
+	list<T>* StartWith(string searcher) {
+		if (avlTree != nullptr) return avlTree->StartWith(searcher);
+		return new list<T>();
+	}
+	list<T>* EndWith(string searcher) {
+		if (avlTree != nullptr) return avlTree->EndWith(searcher);
+		return new list<T>();
+	}
+	void generateTree(function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e) {
 		if (avlTree == nullptr)
-			avlTree = new AvlTree<T>(c);
+			avlTree = new AvlTree<T>(c, s, e);
 	}
 	void deleteTree() {
 		if (avlTree == nullptr) return;

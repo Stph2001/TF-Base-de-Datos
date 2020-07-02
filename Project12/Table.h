@@ -45,34 +45,110 @@ public:
 	}
 
 
-	char Search(string type, char elem, int pos){ return charColumns->Search(elem, pos); }
-	string Search(string type, string elem, int pos) { return stringColumns->Search(elem, pos); }
-	double Search(string type, double elem, int pos) { return doubleColumns->Search(elem, pos); }
+	char Search(char elem, int pos){ return charColumns->Search(elem, pos); }
+	string Search(string elem, int pos) { return stringColumns->Search(elem, pos); }
+	double Search(double elem, int pos) { return doubleColumns->Search(elem, pos); }
 
-	list<char>* Equals(string type, char elem, int pos){ return charColumns->Equals(elem, pos); }
-	list<string>* Equals(string type, string elem, int pos) { return stringColumns->Equals(elem, pos); }
-	list<double>* Equals(string type, double elem, int pos) { return doubleColumns->Equals(elem, pos); }
+	list<char>* Equals(char elem, int pos){ return charColumns->Equals(elem, pos); }
+	list<string>* Equals(string elem, int pos) { return stringColumns->Equals(elem, pos); }
+	list<double>* Equals(double elem, int pos) { return doubleColumns->Equals(elem, pos); }
 
-	list<char>* GreaterThan(string type, char elem, int pos){ return charColumns->GreaterThan(elem, pos); }
-	list<string>* GreaterThan(string type, string elem, int pos) { return stringColumns->GreaterThan(elem, pos); }
-	list<double>* GreaterThan(string type, double elem, int pos) { return doubleColumns->GreaterThan(elem, pos); }
+	list<char>* GreaterThan(char elem, int pos){ return charColumns->GreaterThan(elem, pos); }
+	list<string>* GreaterThan(string elem, int pos) { return stringColumns->GreaterThan(elem, pos); }
+	list<double>* GreaterThan(double elem, int pos) { return doubleColumns->GreaterThan(elem, pos); }
 
-	list<char>* LessThan(string type, char elem, int pos){ return charColumns->LessThan(elem, pos); }
-	list<string>* LessThan(string type, string elem, int pos) { return stringColumns->LessThan(elem, pos); }
-	list<double>* LessThan(string type, double elem, int pos) { return doubleColumns->LessThan(elem, pos); }
+	list<char>* LessThan(char elem, int pos){ return charColumns->LessThan(elem, pos); }
+	list<string>* LessThan(string elem, int pos) { return stringColumns->LessThan(elem, pos); }
+	list<double>* LessThan(double elem, int pos) { return doubleColumns->LessThan(elem, pos); }
+
+	list<char>* StartWithChar(string searcher, int pos) { return charColumns->StartWith(searcher, pos); }
+	list<string>* StartWithString(string searcher, int pos) { return stringColumns->StartWith(searcher, pos); }
+	list<double>* StartWithDouble(string searcher, int pos) { return doubleColumns->StartWith(searcher, pos); }
+
+	list<char>* EndWithChar(string searcher, int pos) { return charColumns->EndWith(searcher, pos); }
+	list<string>* EndWithString(string searcher, int pos) { return stringColumns->EndWith(searcher, pos); }
+	list<double>* EndWithDouble(string searcher, int pos) { return doubleColumns->EndWith(searcher, pos); }
 
 	void Index(string type, int pos){
 		if (type == "letters")
-			charColumns->IndexColumn(pos, [](char c)->double { return (double)c; });
+			charColumns->IndexColumn(pos, 
+				[](char c1, char c)->int {	//compare
+					//-1 izq / 1 der / 0 igual
+					if (c1 > c) return 1;
+					else if (c1 < c) return -1;
+					else return 0; 
+				},
+				[](string s, char c1)->bool {	//start with
+					return c1 == s[0];
+				},
+				[](string s, char c1)->bool {	//end with
+					return c1 == s[0];
+				}
+		);
 		if (type == "words")
-			stringColumns->IndexColumn(pos, [](string s)->double {
-				int sum = 0;
-				for (char c : s)
-					sum += (int)c;
-				return sum;
-			});
+			stringColumns->IndexColumn(pos, 
+			[](string s1,string s)->int {	//compare
+				function<int(string, string, int)> search = [&](string s3, string s4, int i)->int {
+					//-1 izq / 1 der / 0 igual
+					if (i > s.size() && i > s1.size()) return 0;
+					else if (i > s.size()) return 1;
+					else if (i > s1.size()) return -1;
+					if (s1[i] > s[i]) {
+						return 1;
+					}
+					else if (s1[i] < s[i]) {
+						return -1;
+					}
+					else {
+						return search(s1, s, ++i);
+					}
+				}; 
+				return search(s1, s, 0);
+			},
+			[](string s1, string s)->bool {	//start with
+				if (s.size() < s1.size()) return false;
+				return (s.find(s1) == 0);
+			},
+			[](string s1, string s)->bool {	//end with
+				if (s.size() < s1.size()) return false;
+				return (s.find(s1) == s.length() - s1.length());
+			}
+			);
 		if (type == "numbers")
-			doubleColumns->IndexColumn(pos, [](double d)->double {return d; });
+			doubleColumns->IndexColumn(pos, 
+			[](double d1, double d2)->int {	//compare
+				//-1 izq / 1 der / 0 igual
+				if (d1 > d2) return 1;
+				else if (d1 < d2) return -1;
+				else return 0;
+			},
+			[](string s, double d1)->bool {	//start with
+				string s1 = to_string(d1);
+				if (s1.size() < s.size()) return false;
+				return (s1.find(s) == 0);
+			},
+			[](string s, double d1)->bool {	//end with
+				int a = (int)round(d1);
+				string s1;
+				if (d1 - a == 0) s1 = to_string(a);
+				else {
+					s1 = to_string(d1);
+					int lastDecimal = -1;
+					for (int i = 0; i < s1.size(); i++) {
+						if (s1[i] != '0') lastDecimal = -1;
+						else if (s1[i] == '0' && lastDecimal == -1) lastDecimal = i;
+					}
+					if (lastDecimal != -1) {
+						//cortar string
+						char aux[50];
+						strncpy(aux, s1.c_str(), lastDecimal);
+						s1 = aux;
+					}
+				}
+				if (s1.size() < s.size()) return false;
+				return (s1.find(s) == s1.length() - s.length());
+			}
+		);
 	}
 	void RemoveIndex(string type, int pos){
 		if (type == "letters")
@@ -96,7 +172,9 @@ public:
 			cout << "\n\n[6] Buscar Dato";
 			cout << "\n\n[7] Buscar todos los datos iguales a";
 			cout << "\n\n[8] Buscar todos los datos mayores a:";
-			cout << "\n\n[9] Buscar todos los datos menores a:\n\n";
+			cout << "\n\n[9] Buscar todos los datos menores a:";
+			cout << "\n\n[10] Buscar todos los datos que empiezan con:";
+			cout << "\n\n[11] Buscar todos los datos que finalizan con:\n\n";
 			cin >> op;
 			Console::Clear();
 			if (op == 1) {
@@ -180,17 +258,17 @@ public:
 				if (tipo == "words"){
 					string t;
 					cin >> t;
-					cout<<"\n"<<Search(tipo, t, p);
+					cout<<"\n"<<Search(t, p);
 				} 
 				else if (tipo == "letters"){
 					char c;
 					cin >> c;
-					cout<<"\n"<<Search(tipo, c, p);
+					cout<<"\n"<<Search(c, p);
 				}
 				else{
 					double d;
 					cin >> d;
-					cout<<"\n"<<Search(tipo, d, p);
+					cout<<"\n"<<Search(d, p);
 				}
 				_getch();
 			}
@@ -205,21 +283,21 @@ public:
 				if (tipo == "words"){
 					string t;
 					cin >> t;
-					for (string s : *Equals(tipo, t, p)){
+					for (string s : *Equals(t, p)){
 						cout << s << " ";
 					}
 				} 
 				else if (tipo == "letters"){
 					char c;
 					cin >> c;
-					for (char s : *Equals(tipo, c, p)){
+					for (char s : *Equals(c, p)){
 						cout << s << " ";
 					}
 				}
 				else{
 					double d;
 					cin >> d;
-					for (double s : *Equals(tipo, d, p)){
+					for (double s : *Equals(d, p)){
 						cout << s << " ";
 					}
 				}
@@ -232,25 +310,25 @@ public:
 				cin >> tipo;
 				cout << "Ingrese indice de la columna: ";
 				cin >> p;
-				cout << "Ingrese dato para buscar mayores: ";
+				cout << "Ingrese dato para buscar mayores: \n";
 				if (tipo == "words"){
 					string t;
 					cin >> t;
-					for (string s : *GreaterThan(tipo, t, p)){
+					for (string s : *GreaterThan(t, p)){
 						cout << s << " ";
 					}
 				} 
 				else if (tipo == "letters"){
 					char c;
 					cin >> c;
-					for (char s : *GreaterThan(tipo, c, p)){
+					for (char s : *GreaterThan(c, p)){
 						cout << s << " ";
 					}
 				}
 				else{
 					double d;
 					cin >> d;
-					for (double s : *GreaterThan(tipo, d, p)){
+					for (double s : *GreaterThan(d, p)){
 						cout << s << " ";
 					}
 				}
@@ -263,25 +341,87 @@ public:
 				cin >> tipo;
 				cout << "Ingrese indice de la columna: ";
 				cin >> p;
-				cout << "Ingrese dato para buscar menores: ";
+				cout << "Ingrese dato para buscar menores: \n";
 				if (tipo == "words"){
 					string t;
 					cin >> t;
-					for (string s : *LessThan(tipo, t, p)){
+					for (string s : *LessThan(t, p)){
 						cout << s << " ";
 					}
 				} 
 				else if (tipo == "letters"){
 					char c;
 					cin >> c;
-					for (char s : *LessThan(tipo, c, p)){
+					for (char s : *LessThan(c, p)){
 						cout << s << " ";
 					}
 				}
 				else{
 					double d;
 					cin >> d;
-					for (double s : *LessThan(tipo, d, p)){
+					for (double s : *LessThan(d, p)){
+						cout << s << " ";
+					}
+				}
+				_getch();
+			}
+			else if (op == 10) {
+			string tipo;
+			int p;
+			cout << "Ingrese tipo de dato a buscar: ";
+			cin >> tipo;
+			cout << "Ingrese indice de la columna: ";
+			cin >> p;
+			cout << "Ingrese el dato inicial para buscar entre los datos: \n";
+			if (tipo == "words") {
+				string t;
+				cin >> t;
+				for (string s : *StartWithString(t, p)) {
+					cout << s << " ";
+				}
+			}
+			else if (tipo == "letters") {
+				string c;
+				cin >> c;
+				for (char s : *StartWithChar(c, p)) {
+					cout << s << " ";
+				}
+			}
+			else {
+				string d;
+				cin >> d;
+				for (double s : *StartWithDouble(d, p)) {
+					cout << s << " ";
+				}
+			}
+			_getch();
+			}
+			else if (op == 11) {
+				string tipo;
+				int p;
+				cout << "Ingrese tipo de dato a buscar: ";
+				cin >> tipo;
+				cout << "Ingrese indice de la columna: ";
+				cin >> p;
+				cout << "Ingrese el dato final para buscar entre los datos: \n";
+				if (tipo == "words") {
+					string t;
+					cin >> t;
+					for (string s : *EndWithString(t, p)) {
+						cout << s << " ";
+					}
+				}
+				else if (tipo == "letters") {
+					string c;
+					cin >> c;
+					for (char s : *EndWithChar(c, p)) {
+						cout << s << " ";
+					}
+				}
+				else {
+					string d;
+					cin >> d;
+					for (double s : *EndWithDouble(d, p)) {
 						cout << s << " ";
 					}
 				}

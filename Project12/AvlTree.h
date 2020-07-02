@@ -1,6 +1,8 @@
 #pragma once
 #include <list>
 #include <functional>
+#include <string>
+#include <string.h>
 #define max(a,b)(a>b?a:b)
 using namespace std;
 
@@ -18,14 +20,18 @@ class AvlTree
 {
 private:
 	Node<T>* root;
-	function<double(T elem)> compare;
+	function<int(T elem1, T elem2)> compare;
+	function<bool(string search, T elem1)> checkStart;
+	function<bool(string search, T elem1)> checkEnd;
 	int length;
 
 public:
-	AvlTree(function<double(T)> c){
+	AvlTree(function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e){
 		length = 0;
 		root = nullptr;
 		compare = c;
+		checkStart = s;
+		checkEnd = e;
 	}
 	~AvlTree(){
 
@@ -49,6 +55,16 @@ public:
 		lessThan(root, elem, elems);
 		return elems;
 	}
+	list<T>* StartWith(string searcher) {
+		list<T>* elems = new list<T>();
+		startWith(root, searcher, elems);
+		return elems;
+	}
+	list<T>* EndWith(string searcher) {
+		list<T>* elems = new list<T>();
+		endWith(root, searcher, elems);
+		return elems;
+	}
 
 private:
 	void clear(Node<T> *&node) {
@@ -68,12 +84,13 @@ private:
 			length++;
 		}
 		else{
-			if (compare(elem) < compare(node->elem)){
+			add(compare(elem, node->elem) == -1 ? node->Left : node->Right, elem);
+			/*if (compare(elem) < compare(node->elem)){
 				add(node->Left, elem);
 			}
 			else{
 				add(node->Right, elem);
-			}
+			}*/
 			balance(node);
 		}
 	}
@@ -124,36 +141,36 @@ private:
 		}
 	}
 	T search(Node<T> *&node, T elem){
-		if (node == nullptr) { cout << "Nada :c";  return 0; }
-		if (compare(elem) == compare(node->elem)) return elem;
+		if (node == nullptr) { return 0; }
+		if (compare(elem, node->elem) == 0) return elem;
 		else{
-			if (compare(elem) > compare(node->elem)){
+			if (compare(elem, node->elem) == 1){
 				return search(node->Right, elem);
 			}
-			else if (compare(elem) < compare(node->elem)){
+			else if (compare(elem, node->elem) == -1){
 				return search(node->Left, elem);
 			}
 		}
 	}
 	void equals(Node<T> *&node, T elem, list<T>* elems){
 		if (node == nullptr) return;
-		if (compare(elem) == compare(node->elem)) {
+		if (compare(elem, node->elem) == 0) {
 			elems->push_back(elem);
 			equals(node->Right, elem, elems);
 			equals(node->Left, elem, elems);
 		}
 		else{
-			if (compare(elem) > compare(node->elem)){
+			if (compare(elem, node->elem) == 1){
 				equals(node->Right, elem, elems);
 			}
-			else if (compare(elem) < compare(node->elem)){
+			else if (compare(elem, node->elem) == -1){
 				equals(node->Left, elem, elems);
 			}
 		}
 	}
 	void greaterThan(Node<T> *&node, T elem, list<T>* elems){
 		if (node == nullptr) return;
-		if (compare(elem) < compare(node->elem)){
+		if (compare(elem, node->elem) == -1){
 			elems->push_back(node->elem);
 			greaterThan(node->Right, elem, elems);
 			greaterThan(node->Left, elem, elems);
@@ -164,7 +181,7 @@ private:
 	}
 	void lessThan(Node<T>*& node, T elem, list<T>* elems) {
 		if (node == nullptr) return;
-		if (compare(elem) > compare(node->elem)){
+		if (compare(elem, node->elem) == 1){
 			elems->push_back(node->elem);
 			lessThan(node->Right, elem, elems);
 			lessThan(node->Left, elem, elems);
@@ -172,5 +189,17 @@ private:
 		else {
 			lessThan(node->Left, elem, elems);
 		}
+	}
+	void startWith (Node<T>*& node, string searcher, list<T>* elems) {
+		if (node == nullptr) return;
+		if (checkStart(searcher, node->elem)) elems->push_back(node->elem);
+		startWith(node->Right, searcher, elems);
+		startWith(node->Left, searcher, elems);
+	}
+	void endWith(Node<T>*& node, string searcher, list<T>* elems){
+		if (node == nullptr) return;
+		if (checkEnd(searcher, node->elem)) elems->push_back(node->elem);
+		endWith(node->Right, searcher, elems);
+		endWith(node->Left, searcher,elems);
 	}
 };

@@ -42,8 +42,14 @@ public:
 	list<T>* Equals(T elem, int pos) {
 		return columns[pos]->Equals(elem);
 	}
-	void IndexColumn(int pos, function<double(T)> c){
-		columns[pos]->Index(c);
+	list<T>* StartWith(string searcher, int pos){
+		return columns[pos]->StartWith(searcher);
+	}
+	list<T>* EndWith(string searcher, int pos) {
+		return columns[pos]->EndWith(searcher);
+	}
+	void IndexColumn(int pos, function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e){
+		columns[pos]->Index(c,s, e);
 	}
 	void RemoveIndexColumn(int pos){
 		columns[pos]->deleteTree();
