@@ -45,13 +45,13 @@ public:
 	}
 	void Print() {
 		for (auto c : *datas)
-			cout << c << "\n";
+			cout << "\n" << c << "|";
 	}
 	int Length() {
 		return datas->size();
 	}
-	void Index(function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e) {
-		generateTree(c,s,e);
+	void Index(function<int(T, T)> c, function<bool(string, T)> h, function<bool(string, T)> s, function<bool(string, T)> e) {
+		generateTree(c,h, s,e);
 		for (T p : *datas)
 			avlTree->Add(p, datas->size() - 1);
 	}
@@ -71,6 +71,14 @@ public:
 		if (avlTree != nullptr) return avlTree->LessThan(elem);
 		return new list<T>();
 	}
+	list<T>* Contains(string searcher) {
+		if (avlTree != nullptr) return avlTree->Contains(searcher);
+		return new list<T>();
+	}
+	list<T>* NotContains(string searcher) {
+		if (avlTree != nullptr) return avlTree->NotContains(searcher);
+		return new list<T>();
+	}
 	list<T>* StartWith(string searcher) {
 		if (avlTree != nullptr) return avlTree->StartWith(searcher);
 		return new list<T>();
@@ -87,9 +95,9 @@ public:
 		if (avlTree != nullptr) return avlTree->InReverse();
 		return new list<T>();
 	}
-	void generateTree(function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e) {
+	void generateTree(function<int(T, T)> c, function<bool(string, T)> h, function<bool(string, T)> s, function<bool(string, T)> e) {
 		if (avlTree == nullptr)
-			avlTree = new AvlTree<T>(c, s, e);
+			avlTree = new AvlTree<T>(c, h, s, e);
 	}
 	void deleteTree() {
 		if (avlTree == nullptr) return;

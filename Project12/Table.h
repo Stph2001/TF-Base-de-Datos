@@ -61,6 +61,14 @@ public:
 	list<string>* LessThan(string elem, int pos) { return stringColumns->LessThan(elem, pos); }
 	list<double>* LessThan(double elem, int pos) { return doubleColumns->LessThan(elem, pos); }
 
+	list<char>* ContainsChar(string searcher, int pos) { return charColumns->Contains(searcher, pos); }
+	list<string>* ContainsString(string searcher, int pos) { return stringColumns->Contains(searcher, pos); }
+	list<double>* ContainsDouble(string searcher, int pos) { return doubleColumns->Contains(searcher, pos); }
+
+	list<char>* NotContainsChar(string searcher, int pos) { return charColumns->NotContains(searcher, pos); }
+	list<string>* NotContainsString(string searcher, int pos) { return stringColumns->NotContains(searcher, pos); }
+	list<double>* NotContainsDouble(string searcher, int pos) { return doubleColumns->NotContains(searcher, pos); }
+
 	list<char>* StartWithChar(string searcher, int pos) { return charColumns->StartWith(searcher, pos); }
 	list<string>* StartWithString(string searcher, int pos) { return stringColumns->StartWith(searcher, pos); }
 	list<double>* StartWithDouble(string searcher, int pos) { return doubleColumns->StartWith(searcher, pos); }
@@ -85,6 +93,9 @@ public:
 					if (c1 > c) return 1;
 					else if (c1 < c) return -1;
 					else return 0; 
+				},
+				[](string s, char c1)->bool {	//contains
+					return c1 == s[0];
 				},
 				[](string s, char c1)->bool {	//start with
 					return c1 == s[0];
@@ -113,13 +124,18 @@ public:
 				}; 
 				return search(s1, s, 0);
 			},
+			[](string s1, string s)->bool {	//contains
+				if (s.size() < s1.size()) return false;
+				return (s.find(s1) != string::npos);
+			},
 			[](string s1, string s)->bool {	//start with
 				if (s.size() < s1.size()) return false;
 				return (s.find(s1) == 0);
 			},
 			[](string s1, string s)->bool {	//end with
 				if (s.size() < s1.size()) return false;
-				return (s.find(s1) == s.length() - s1.length());
+				//return (s.find(s1) == s.length() - s1.length());
+				return (0 == s.compare(s.length() - s1.length(), s1.length(), s1));
 			}
 			);
 		if (type == "numbers")
@@ -130,6 +146,11 @@ public:
 				else if (d1 < d2) return -1;
 				else return 0;
 			},
+			[](string s, double d1)->bool {	//contains
+				string s1 = to_string(d1);
+				if (s1.size() < s.size()) return false;
+				return (s1.find(s) != string::npos);
+			},
 			[](string s, double d1)->bool {	//start with
 				string s1 = to_string(d1);
 				if (s1.size() < s.size()) return false;
@@ -139,7 +160,7 @@ public:
 				int a = (int)round(d1);
 				string s1;
 				if (d1 - a == 0) s1 = to_string(a);
-				else {
+				else {	//convert from 9.458000 to 9.458
 					s1 = to_string(d1);
 					int lastDecimal = -1;
 					for (int i = 0; i < s1.size(); i++) {
@@ -154,7 +175,8 @@ public:
 					}
 				}
 				if (s1.size() < s.size()) return false;
-				return (s1.find(s) == s1.length() - s.length());
+				/*return (s1.find(s) == s1.length() - s.length());*/
+				return (0 == s1.compare(s1.length() - s.length(), s.length(), s));
 			}
 		);
 	}
@@ -181,10 +203,12 @@ public:
 			cout << "\n\n[7] Buscar todos los datos iguales a";
 			cout << "\n\n[8] Buscar todos los datos mayores a:";
 			cout << "\n\n[9] Buscar todos los datos menores a:";
-			cout << "\n\n[10] Buscar todos los datos que empiezan con:";
-			cout << "\n\n[11] Buscar todos los datos que finalizan con:";
-			cout << "\n\n[12] Ordenar ascendentemente:";
-			cout << "\n\n[13] Ordenar descendentemente:\n\n";
+			cout << "\n\n[10] Buscar todos los datos que contienen:";
+			cout << "\n\n[11] Buscar todos los datos que no contienen:";
+			cout << "\n\n[12] Buscar todos los datos que empiezan con:";
+			cout << "\n\n[13] Buscar todos los datos que finalizan con:";
+			cout << "\n\n[14] Ordenar ascendentemente:";
+			cout << "\n\n[15] Ordenar descendentemente:\n\n";
 
 			cin >> op;
 			Console::Clear();
@@ -383,6 +407,68 @@ public:
 			cin >> tipo;
 			cout << "Ingrese indice de la columna: ";
 			cin >> p;
+			cout << "Ingrese el dato para buscar si esta contenido entre los otros datos: \n";
+			if (tipo == "words") {
+				string t;
+				cin >> t;
+				for (string s : *ContainsString(t, p)) {
+					cout << s << " ";
+				}
+			}
+			else if (tipo == "letters") {
+				string c;
+				cin >> c;
+				for (char s : *ContainsChar(c, p)) {
+					cout << s << " ";
+				}
+			}
+			else {
+				string d;
+				cin >> d;
+				for (double s : *ContainsDouble(d, p)) {
+					cout << s << " ";
+				}
+			}
+			_getch();
+			}
+			else if (op == 11) {
+			string tipo;
+			int p;
+			cout << "Ingrese tipo de dato a buscar: ";
+			cin >> tipo;
+			cout << "Ingrese indice de la columna: ";
+			cin >> p;
+			cout << "Ingrese el dato para buscar si no esta contenido entre los otros datos: \n";
+			if (tipo == "words") {
+				string t;
+				cin >> t;
+				for (string s : *NotContainsString(t, p)) {
+					cout << s << " ";
+				}
+			}
+			else if (tipo == "letters") {
+				string c;
+				cin >> c;
+				for (char s : *NotContainsChar(c, p)) {
+					cout << s << " ";
+				}
+			}
+			else {
+				string d;
+				cin >> d;
+				for (double s : *NotContainsDouble(d, p)) {
+					cout << s << " ";
+				}
+			}
+			_getch();
+			}
+			else if (op == 12) {
+			string tipo;
+			int p;
+			cout << "Ingrese tipo de dato a buscar: ";
+			cin >> tipo;
+			cout << "Ingrese indice de la columna: ";
+			cin >> p;
 			cout << "Ingrese el dato inicial para buscar entre los datos: \n";
 			if (tipo == "words") {
 				string t;
@@ -407,7 +493,7 @@ public:
 			}
 			_getch();
 			}
-			else if (op == 11) {
+			else if (op == 13) {
 				string tipo;
 				int p;
 				cout << "Ingrese tipo de dato a buscar: ";
@@ -438,7 +524,7 @@ public:
 				}
 				_getch();
 			}
-			else if (op == 12) {
+			else if (op == 14) {
 				string tipo;
 				int p;
 				cout << "Ingrese tipo de columna a ordenar: ";
@@ -463,7 +549,7 @@ public:
 				}
 				_getch();
 			}
-			else if (op == 13) {
+			else if (op == 15) {
 			string tipo;
 			int p;
 			cout << "Ingrese tipo de columna a ordenar: ";

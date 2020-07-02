@@ -42,6 +42,12 @@ public:
 	list<T>* Equals(T elem, int pos) {
 		return columns[pos]->Equals(elem);
 	}
+	list<T>* Contains(string searcher, int pos) {
+		return columns[pos]->Contains(searcher);
+	}
+	list<T>* NotContains(string searcher,int pos){
+		return columns[pos]->NotContains(searcher);
+	}
 	list<T>* StartWith(string searcher, int pos){
 		return columns[pos]->StartWith(searcher);
 	}
@@ -54,8 +60,8 @@ public:
 	list<T>* InReverse(int pos) {
 		return columns[pos]->InReverse();
 	}
-	void IndexColumn(int pos, function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e){
-		columns[pos]->Index(c,s,e);
+	void IndexColumn(int pos, function<int(T, T)> c, function<bool(string, T)> h, function<bool(string, T)> s, function<bool(string, T)> e){
+		columns[pos]->Index(c,h,s,e);
 	}
 	void RemoveIndexColumn(int pos){
 		columns[pos]->deleteTree();

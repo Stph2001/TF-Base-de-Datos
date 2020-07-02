@@ -22,15 +22,17 @@ class AvlTree
 private:
 	Node<T>* root;
 	function<int(T elem1, T elem2)> compare;
+	function<bool(string search, T elem1)> checkContains;
 	function<bool(string search, T elem1)> checkStart;
 	function<bool(string search, T elem1)> checkEnd;
 	int length;
 
 public:
-	AvlTree(function<int(T, T)> c, function<bool(string, T)> s, function<bool(string, T)> e){
+	AvlTree(function<int(T, T)> c, function<bool(string, T)> h, function<bool(string, T)> s, function<bool(string, T)> e){
 		length = 0;
 		root = nullptr;
 		compare = c;
+		checkContains = h;
 		checkStart = s;
 		checkEnd = e;
 	}
@@ -55,6 +57,16 @@ public:
 	list<T>* LessThan(T elem){
 		list<T>* elems = new list<T>();
 		lessThan(root, elem, elems);
+		return elems;
+	}
+	list<T>* Contains(string searcher) {
+		list<T>* elems = new list<T>();
+		contains(root, searcher, elems);
+		return elems;
+	}
+	list<T>* NotContains(string searcher) {
+		list<T>* elems = new list<T>();
+		notContains(root, searcher, elems);
 		return elems;
 	}
 	list<T>* StartWith(string searcher) {
@@ -196,6 +208,18 @@ private:
 			lessThan(node->Left, elem, elems);
 		}
 	}
+	void contains(Node<T>*& node, string searcher, list<T>* elems) {
+		if (node == nullptr) return;
+		if (checkContains(searcher, node->elem)) elems->push_back(node->elem);
+		contains(node->Right, searcher, elems);
+		contains(node->Left, searcher, elems);
+	}
+	void notContains(Node<T>*& node, string searcher, list<T>* elems) {
+		if (node == nullptr) return;
+		if (!checkContains(searcher, node->elem)) elems->push_back(node->elem);
+		notContains(node->Right, searcher, elems);
+		notContains(node->Left, searcher, elems);
+	}
 	void startWith (Node<T>*& node, string searcher, list<T>* elems) {
 		if (node == nullptr) return;
 		if (checkStart(searcher, node->elem)) elems->push_back(node->elem);
@@ -216,8 +240,8 @@ private:
 	}
 	void inReverse(Node<T>*& node, list<T>* elems) {
 		if (node == nullptr) return;
-		inOrder(node->Right, elems);
-		elems->push_back(node->elem);
-		inOrder(node->Left,elems);
+		inReverse(node->Left, elems);
+		elems->push_front(node->elem);
+		inReverse(node->Right, elems);
 	}
 };
