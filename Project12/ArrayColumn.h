@@ -1,82 +1,72 @@
 #pragma once
 #include "Column.h"
-
+#include <map>
+#include <vector>
 template<typename T>
 class ArrayColumn 
 {
 private:
-	Column<T>** columns;
-	int nColumns;
+	map<string, Column<T>*> columns;
 
 public:
 	ArrayColumn(){
-		nColumns = 0;
+		//columns = new map<string, Column<T>*>();
 	}
 	~ArrayColumn(){
-		if (nColumns > 0) {
-			for (int i = 0; i < nColumns; i++)
-				delete columns[i];
-			delete columns;
-			nColumns = 0;
+		if (columns != nullptr) {
+			columns.erase();
 		}
 		deleteTree();
 	}
-	void AddColumn(){
-		Column<T>** aux = new Column<T> * [nColumns + 1];
-		if (nColumns>0)
-			for (int i = 0; i < nColumns; i++)
-				aux[i] = columns[i];
-		aux[nColumns] = new Column<T>();
-		nColumns++;
-		columns = aux;
+	void AddColumn(string nameColumn){
+		columns[nameColumn] = new Column<T>();
+		//columns->insert(nameColumn, new Column<T>());
 	}
-	T Search(T elem, int pos){
-		return columns[pos]->Search(elem);
+	T Search(T elem, string nameColum){
+		return columns[nameColum]->Search(elem);
 	}
-	list<T>* GreaterThan(T elem, int pos){
-		return columns[pos]->GreaterThan(elem);
+	list<T>* GreaterThan(T elem, string nameColumn){
+		return columns[nameColumn]->GreaterThan(elem);
 	}
-	list<T>* LessThan(T elem, int pos){
-		return columns[pos]->LessThan(elem);
+	list<T>* LessThan(T elem, string nameColumn){
+		return columns[nameColumn]->LessThan(elem);
 	}
-	list<T>* Equals(T elem, int pos) {
-		return columns[pos]->Equals(elem);
+	list<T>* Equals(T elem, string nameColumn) {
+		return columns[nameColumn]->Equals(elem);
 	}
-	list<T>* Contains(string searcher, int pos) {
-		return columns[pos]->Contains(searcher);
+	list<T>* Contains(string searcher, string nameColumn) {
+		return columns[nameColumn]->Contains(searcher);
 	}
-	list<T>* NotContains(string searcher,int pos){
-		return columns[pos]->NotContains(searcher);
+	list<T>* NotContains(string searcher, string nameColumn){
+		return columns[nameColumn]->NotContains(searcher);
 	}
-	list<T>* StartWith(string searcher, int pos){
-		return columns[pos]->StartWith(searcher);
+	list<T>* StartWith(string searcher, string nameColumn){
+		return columns[nameColumn]->StartWith(searcher);
 	}
-	list<T>* EndWith(string searcher, int pos) {
-		return columns[pos]->EndWith(searcher);
+	list<T>* EndWith(string searcher, string nameColumn) {
+		return columns[nameColumn]->EndWith(searcher);
 	}
-	list<T>* InOrder(int pos) {
-		return columns[pos]->InOrder();
+	list<T>* InOrder(string nameColumn) {
+		return columns[nameColumn]->InOrder();
 	}
-	list<T>* InReverse(int pos) {
-		return columns[pos]->InReverse();
+	list<T>* InReverse(string nameColumn) {
+		return columns[nameColumn]->InReverse();
 	}
-	void IndexColumn(int pos, function<int(T, T)> c, function<bool(string, T)> h, function<bool(string, T)> s, function<bool(string, T)> e){
-		columns[pos]->Index(c,h,s,e);
+	void IndexColumn(string nameColumn, function<int(T, T)> c, function<bool(string, T)> h, function<bool(string, T)> s, function<bool(string, T)> e){
+		
+		columns[nameColumn]->Index(c,h,s,e);
 	}
-	void RemoveIndexColumn(int pos){
-		columns[pos]->deleteTree();
+	void RemoveIndexColumn(string nameColumn){
+		columns[nameColumn]->deleteTree();
 	}
-	void PrintColumn(int pos){
-		columns[pos]->Print();
+	void PrintColumn(string nameColumn){
+		columns[nameColumn]->Print();
 	}
-	Column<T> *getColumn(int pos){
-		return columns[pos];
+	Column<T> *getColumn(string nameColumn){
+		return columns[nameColumn];
 	}
-	void AddToColumn(T elem, int pos){
-		columns[pos]->Add(elem);
-	}
-	int Length(){
-		return nColumns;
+	void AddToColumn(T elem, string nameColumn){
+		columns[nameColumn]->Add(elem);
 	}
 };
 
