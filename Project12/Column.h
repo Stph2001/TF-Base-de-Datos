@@ -25,22 +25,22 @@ public:
 		datas->push_back(elem);
 		if (avlTree != nullptr) avlTree->Add(elem, datas->size() - 1);
 	}
+	void Remove(T elem){
+		if (avlTree != nullptr)avlTree->Remove(elem);
+	}
 	void AddStart(T elem) {
 		datas->push_front(elem);
 	}
 	void AddPosition(T elem, int pos) {
 
 	}
-	void Remove(char elem) {
+	void RemoveStart(T elem) {
 
 	}
-	void RemoveStart(char elem) {
+	void RemovePosition(T elem, int pos) {
 
 	}
-	void RemovePosition(char elem, int pos) {
-
-	}
-	void Modify(char elem, int pos) {
+	void Modify(T elem, int pos) {
 
 	}
 	void Print() {

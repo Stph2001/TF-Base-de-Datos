@@ -19,31 +19,167 @@ public:
 	~Table(){
 	}
 	void AddColumn(string type, string nameColumn) {
-		if (type == "letters") {
+		if (type == "Letras") {
 			if (charColumns == nullptr) 
 				generateCharColumn();
 			charColumns->AddColumn(nameColumn);
 		}
-		else if (type == "words") {
+		else if (type == "Palabras") {
 			if (stringColumns == nullptr) 
 				generateStringColumn();
 			stringColumns->AddColumn(nameColumn);
 		}
-		else if (type == "numbers") {
+		else if (type == "Numeros") {
 			if (doubleColumns == nullptr) 
 				generateDoubleColumn();
 			doubleColumns->AddColumn(nameColumn);
 		}
 	}
+	int AddData(string nameColumn, string elem) {
+		if (charColumns != nullptr) {
+			if (charColumns->getColumn(nameColumn) != nullptr) {
+				char e = elem[0];
+				charColumns->getColumn(nameColumn)->Add(e);
+				return charColumns->getColumn(nameColumn)->Length();
+			}
+		}
+		else if (stringColumns != nullptr) {
+			cout << nameColumn<<" gogoo";
+			if (stringColumns->getColumn(nameColumn)) {
+				stringColumns->getColumn(nameColumn)->Add(elem);
+				return stringColumns->getColumn(nameColumn)->Length();
+			}
+		}
+		else if(doubleColumns != nullptr) {
+			if (doubleColumns->getColumn(nameColumn)) {
+				double e = stod(elem.c_str());
+				doubleColumns->getColumn(nameColumn)->Add(e);
+				return doubleColumns->getColumn(nameColumn)->Length();
+			}
+		}
+		return -1;
+	}
 	void PrintColumn(string type, string nameColumn) {
-		if (type == "letters")
+		if (type == "Letras" && charColumns != nullptr)
 			charColumns->getColumn(nameColumn)->Print();
-		if (type == "words")
+		if (type == "Palabras" && stringColumns != nullptr)
 			stringColumns->getColumn(nameColumn)->Print();
-		if (type == "numbers")
+		if (type == "Numeros" && doubleColumns != nullptr)
 			doubleColumns->getColumn(nameColumn)->Print();
 	}
+	void Index(string nameColumn) {
+		if (charColumns != nullptr) {
+			if (charColumns->getColumn(nameColumn) != nullptr)
+				charColumns->IndexColumn(nameColumn,
+					[](char c1, char c)->int {	//compare
+						//-1 izq / 1 der / 0 igual
+						if (c1 > c) return 1;
+						else if (c1 < c) return -1;
+						else return 0;
+					},
+					[](string s, char c1)->bool {	//contains
+						return c1 == s[0];
+					},
+						[](string s, char c1)->bool {	//start with
+						return c1 == s[0];
+					},
+						[](string s, char c1)->bool {	//end with
+						return c1 == s[0];
+					}
+					);
+		}
+		else if (stringColumns != nullptr) {
+			if (stringColumns->getColumn(nameColumn))
+				stringColumns->IndexColumn(nameColumn,
+					[](string s1, string s)->int {	//compare
+						function<int(string, string, int)> search = [&](string s3, string s4, int i)->int {
+							//-1 izq / 1 der / 0 igual
+							if (i > s.size() && i > s1.size()) return 0;
+							else if (i > s.size()) return 1;
+							else if (i > s1.size()) return -1;
+							if (s1[i] > s[i]) {
+								return 1;
+							}
+							else if (s1[i] < s[i]) {
+								return -1;
+							}
+							else {
+								return search(s1, s, ++i);
+							}
+						};
+						return search(s1, s, 0);
+					},
+					[](string s1, string s)->bool {	//contains
+						if (s.size() < s1.size()) return false;
+						return (s.find(s1) != string::npos);
+					},
+						[](string s1, string s)->bool {	//start with
+						if (s.size() < s1.size()) return false;
+						return (s.find(s1) == 0);
+					},
+						[](string s1, string s)->bool {	//end with
+						if (s.size() < s1.size()) return false;
+						//return (s.find(s1) == s.length() - s1.length());
+						return (0 == s.compare(s.length() - s1.length(), s1.length(), s1));
+					}
+					);
+		}
+		else if (doubleColumns != nullptr) {
+			if (doubleColumns->getColumn(nameColumn))
+				doubleColumns->IndexColumn(nameColumn,
+					[](double d1, double d2)->int {	//compare
+						//-1 izq / 1 der / 0 igual
+						if (d1 > d2) return 1;
+						else if (d1 < d2) return -1;
+						else return 0;
+					},
+					[](string s, double d1)->bool {	//contains
+						string s1 = to_string(d1);
+						if (s1.size() < s.size()) return false;
+						return (s1.find(s) != string::npos);
+					},
+						[](string s, double d1)->bool {	//start with
+						string s1 = to_string(d1);
+						if (s1.size() < s.size()) return false;
+						return (s1.find(s) == 0);
+					},
+						[](string s, double d1)->bool {	//end with
+						int a = (int)round(d1);
+						string s1;
+						if (d1 - a == 0) s1 = to_string(a);
+						else {	//convert from 9.458000 to 9.458
+							s1 = to_string(d1);
+							int lastDecimal = -1;
+							for (int i = 0; i < s1.size(); i++) {
+								if (s1[i] != '0') lastDecimal = -1;
+								else if (s1[i] == '0' && lastDecimal == -1) lastDecimal = i;
+							}
+							if (lastDecimal != -1) {
+								//cortar string
+								char aux[50];
+								strncpy(aux, s1.c_str(), lastDecimal);
+								s1 = aux;
+							}
+						}
+						if (s1.size() < s.size()) return false;
+						/*return (s1.find(s) == s1.length() - s.length());*/
+						return (0 == s1.compare(s1.length() - s.length(), s.length(), s));
+					}
+					);
+		}
+	}
+	void RemoveIndex(string type, string nameColumn) {
+		if (type == "Letras")
+			charColumns->RemoveIndexColumn(nameColumn);
+		if (type == "Palabras")
+			stringColumns->RemoveIndexColumn(nameColumn);
+		if (type == "Numeros")
+			doubleColumns->RemoveIndexColumn(nameColumn);
+	}
 
+	void Remove(char elem, string nameColumn){  charColumns->Remove(elem, nameColumn); }
+	void Remove(string elem, string nameColumn) {  stringColumns->Remove(elem, nameColumn); }
+	void Remove(double elem, string nameColumn) {  doubleColumns->Remove(elem, nameColumn); }
 
 	char Search(char elem, string nameColumn){ return charColumns->Search(elem, nameColumn); }
 	string Search(string elem, string nameColumn) { return stringColumns->Search(elem, nameColumn); }
@@ -85,109 +221,6 @@ public:
 	list<string>* InReverseString(string nameColumn) { return stringColumns->InReverse(nameColumn); }
 	list<double>* InReverseDouble(string nameColumn) { return doubleColumns->InReverse(nameColumn); }
 
-	void Index(string type, string nameColumn){
-		if (type == "letters")
-			charColumns->IndexColumn(nameColumn,
-				[](char c1, char c)->int {	//compare
-					//-1 izq / 1 der / 0 igual
-					if (c1 > c) return 1;
-					else if (c1 < c) return -1;
-					else return 0; 
-				},
-				[](string s, char c1)->bool {	//contains
-					return c1 == s[0];
-				},
-				[](string s, char c1)->bool {	//start with
-					return c1 == s[0];
-				},
-				[](string s, char c1)->bool {	//end with
-					return c1 == s[0];
-				}
-		);
-		if (type == "words")
-			stringColumns->IndexColumn(nameColumn,
-			[](string s1,string s)->int {	//compare
-				function<int(string, string, int)> search = [&](string s3, string s4, int i)->int {
-					//-1 izq / 1 der / 0 igual
-					if (i > s.size() && i > s1.size()) return 0;
-					else if (i > s.size()) return 1;
-					else if (i > s1.size()) return -1;
-					if (s1[i] > s[i]) {
-						return 1;
-					}
-					else if (s1[i] < s[i]) {
-						return -1;
-					}
-					else {
-						return search(s1, s, ++i);
-					}
-				}; 
-				return search(s1, s, 0);
-			},
-			[](string s1, string s)->bool {	//contains
-				if (s.size() < s1.size()) return false;
-				return (s.find(s1) != string::npos);
-			},
-			[](string s1, string s)->bool {	//start with
-				if (s.size() < s1.size()) return false;
-				return (s.find(s1) == 0);
-			},
-			[](string s1, string s)->bool {	//end with
-				if (s.size() < s1.size()) return false;
-				//return (s.find(s1) == s.length() - s1.length());
-				return (0 == s.compare(s.length() - s1.length(), s1.length(), s1));
-			}
-			);
-		if (type == "numbers")
-			doubleColumns->IndexColumn(nameColumn,
-			[](double d1, double d2)->int {	//compare
-				//-1 izq / 1 der / 0 igual
-				if (d1 > d2) return 1;
-				else if (d1 < d2) return -1;
-				else return 0;
-			},
-			[](string s, double d1)->bool {	//contains
-				string s1 = to_string(d1);
-				if (s1.size() < s.size()) return false;
-				return (s1.find(s) != string::npos);
-			},
-			[](string s, double d1)->bool {	//start with
-				string s1 = to_string(d1);
-				if (s1.size() < s.size()) return false;
-				return (s1.find(s) == 0);
-			},
-			[](string s, double d1)->bool {	//end with
-				int a = (int)round(d1);
-				string s1;
-				if (d1 - a == 0) s1 = to_string(a);
-				else {	//convert from 9.458000 to 9.458
-					s1 = to_string(d1);
-					int lastDecimal = -1;
-					for (int i = 0; i < s1.size(); i++) {
-						if (s1[i] != '0') lastDecimal = -1;
-						else if (s1[i] == '0' && lastDecimal == -1) lastDecimal = i;
-					}
-					if (lastDecimal != -1) {
-						//cortar string
-						char aux[50];
-						strncpy(aux, s1.c_str(), lastDecimal);
-						s1 = aux;
-					}
-				}
-				if (s1.size() < s.size()) return false;
-				/*return (s1.find(s) == s1.length() - s.length());*/
-				return (0 == s1.compare(s1.length() - s.length(), s.length(), s));
-			}
-		);
-	}
-	void RemoveIndex(string type, string nameColumn){
-		if (type == "letters")
-			charColumns->RemoveIndexColumn(nameColumn);
-		if (type == "words")
-			stringColumns->RemoveIndexColumn(nameColumn);
-		if (type == "numbers")
-			doubleColumns->RemoveIndexColumn(nameColumn);
-	}
 	void Comprobar() {
 		Console::SetWindowSize(100, 35);
 		int op = 3;
@@ -231,11 +264,11 @@ public:
 				cout << "Ingrese tipo de columna: ";
 				cin >> tipo;
 				cout << "Ingrese dato nuevo: ";
-				if (tipo == "letters"){
+				if (tipo == "Letras"){
 					cin >> tipo2;
 					charColumns->getColumn(nameColumn)->Add(tipo2);
 				}
-				else if (tipo == "words"){
+				else if (tipo == "Palabras"){
 					cin >> tipo;
 					stringColumns->getColumn(nameColumn)->Add(tipo);
 				}
@@ -256,17 +289,14 @@ public:
 				_getch();
 			}
 			else if (op == 4) {
-				string ty;
 				string nameColumn;
 				char t;
 				cout << "Desea indexar? (S / N) ";
 				cin >> t; t = toupper(t);
 				if (t == 'S') {
-					cout << "Ingrese tipo de columna: ";
-					cin >> ty;
 					cout << "Ingrese nombre de columna: ";
 					cin >> nameColumn;
-					Index(ty, nameColumn);
+					Index(nameColumn);
 				}
 				_getch();
 			}
@@ -293,12 +323,12 @@ public:
 				cout << "Ingrese nombre de la columna: ";
 				cin >> nameColumn;
 				cout << "Ingrese dato: ";
-				if (tipo == "words"){
+				if (tipo == "Palabras"){
 					string t;
 					cin >> t;
 					cout<<"\n"<<Search(t, nameColumn);
 				} 
-				else if (tipo == "letters"){
+				else if (tipo == "Letras"){
 					char c;
 					cin >> c;
 					cout<<"\n"<<Search(c, nameColumn);
@@ -318,14 +348,14 @@ public:
 				cout << "Ingrese nombre de la columna: ";
 				cin >> nameColumn;
 				cout << "Ingrese dato: ";
-				if (tipo == "words"){
+				if (tipo == "Palabras"){
 					string t;
 					cin >> t;
 					for (string s : *Equals(t, nameColumn)){
 						cout << s << " ";
 					}
 				} 
-				else if (tipo == "letters"){
+				else if (tipo == "Letras"){
 					char c;
 					cin >> c;
 					for (char s : *Equals(c, nameColumn)){
@@ -349,14 +379,14 @@ public:
 				cout << "Ingrese nombre de la columna: ";
 				cin >> nameColumn;
 				cout << "Ingrese dato para buscar mayores: \n";
-				if (tipo == "words"){
+				if (tipo == "Palabras"){
 					string t;
 					cin >> t;
 					for (string s : *GreaterThan(t, nameColumn)){
 						cout << s << " ";
 					}
 				} 
-				else if (tipo == "letters"){
+				else if (tipo == "Letras"){
 					char c;
 					cin >> c;
 					for (char s : *GreaterThan(c, nameColumn)){
@@ -380,14 +410,14 @@ public:
 				cout << "Ingrese nombre de la columna: ";
 				cin >> nameColumn;
 				cout << "Ingrese dato para buscar menores: \n";
-				if (tipo == "words"){
+				if (tipo == "Palabras"){
 					string t;
 					cin >> t;
 					for (string s : *LessThan(t, nameColumn)){
 						cout << s << " ";
 					}
 				} 
-				else if (tipo == "letters"){
+				else if (tipo == "Letras"){
 					char c;
 					cin >> c;
 					for (char s : *LessThan(c, nameColumn)){
@@ -411,14 +441,14 @@ public:
 			cout << "Ingrese nombre de la columna: ";
 			cin >> nameColumn;
 			cout << "Ingrese el dato para buscar si esta contenido entre los otros datos: \n";
-			if (tipo == "words") {
+			if (tipo == "Palabras") {
 				string t;
 				cin >> t;
 				for (string s : *ContainsString(t, nameColumn)) {
 					cout << s << " ";
 				}
 			}
-			else if (tipo == "letters") {
+			else if (tipo == "Letras") {
 				string c;
 				cin >> c;
 				for (char s : *ContainsChar(c, nameColumn)) {
@@ -442,14 +472,14 @@ public:
 			cout << "Ingrese nombre de la columna: ";
 			cin >> nameColumn;
 			cout << "Ingrese el dato para buscar si no esta contenido entre los otros datos: \n";
-			if (tipo == "words") {
+			if (tipo == "Palabras") {
 				string t;
 				cin >> t;
 				for (string s : *NotContainsString(t, nameColumn)) {
 					cout << s << " ";
 				}
 			}
-			else if (tipo == "letters") {
+			else if (tipo == "Letras") {
 				string c;
 				cin >> c;
 				for (char s : *NotContainsChar(c, nameColumn)) {
@@ -473,14 +503,14 @@ public:
 			cout << "Ingrese nombre de la columna: ";
 			cin >> nameColumn;
 			cout << "Ingrese el dato inicial para buscar entre los datos: \n";
-			if (tipo == "words") {
+			if (tipo == "Palabras") {
 				string t;
 				cin >> t;
 				for (string s : *StartWithString(t, nameColumn)) {
 					cout << s << " ";
 				}
 			}
-			else if (tipo == "letters") {
+			else if (tipo == "Letras") {
 				string c;
 				cin >> c;
 				for (char s : *StartWithChar(c, nameColumn)) {
@@ -504,14 +534,14 @@ public:
 				cout << "Ingrese nombre de la columna: ";
 				cin >> nameColumn;
 				cout << "Ingrese el dato final para buscar entre los datos: \n";
-				if (tipo == "words") {
+				if (tipo == "Palabras") {
 					string t;
 					cin >> t;
 					for (string s : *EndWithString(t, nameColumn)) {
 						cout << s << " ";
 					}
 				}
-				else if (tipo == "letters") {
+				else if (tipo == "Letras") {
 					string c;
 					cin >> c;
 					for (char s : *EndWithChar(c, nameColumn)) {
@@ -535,12 +565,12 @@ public:
 				cout << "Ingrese nombre de la columna: ";
 				cin >> nameColumn;
 				cout << "\n";
-				if (tipo == "words") {
+				if (tipo == "Palabras") {
 					for (string s : *InOrderString(nameColumn)) {
 						cout << s << " ";
 					}
 				}
-				else if (tipo == "letters") {
+				else if (tipo == "Letras") {
 					for (char s : *InOrderChar(nameColumn)) {
 						cout << s << " ";
 					}
@@ -560,12 +590,12 @@ public:
 			cout << "Ingrese nombre de la columna: ";
 			cin >> nameColumn;
 			cout << "\n";
-			if (tipo == "words") {
+			if (tipo == "Palabras") {
 				for (string s : *InReverseString(nameColumn)) {
 					cout << s << " ";
 				}
 			}
-			else if (tipo == "letters") {
+			else if (tipo == "Letras") {
 				for (char s : *InReverseChar(nameColumn)) {
 					cout << s << " ";
 				}

@@ -22,8 +22,11 @@ public:
 		columns[nameColumn] = new Column<T>();
 		//columns->insert(nameColumn, new Column<T>());
 	}
-	T Search(T elem, string nameColum){
-		return columns[nameColum]->Search(elem);
+	void Remove(T elem, string nameColumn){
+		return columns[nameColumn]->Remove(elem);
+	}
+	T Search(T elem, string nameColumn){
+		return columns[nameColumn]->Search(elem);
 	}
 	list<T>* GreaterThan(T elem, string nameColumn){
 		return columns[nameColumn]->GreaterThan(elem);

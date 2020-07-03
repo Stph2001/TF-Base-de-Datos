@@ -42,6 +42,7 @@ public:
 	void Clear() { clear(root); }
 	int Length() { return length; }
 	void Add(T elem, int row) { add(root, elem, row); }
+	void Remove(T elem) { remove(root, elem); }
 	T Search(T elem) { return search(root, elem); }
 
 	list<T>* Equals(T elem) {
@@ -244,4 +245,37 @@ private:
 		elems->push_front(node->elem);
 		inReverse(node->Right, elems);
 	}
+	void remove(Node<T>*& node, T elem) {
+		if (node == nullptr) return;
+		if (compare(elem, node->elem) == 0) removeAux(node);
+		else {
+			if (compare(elem, node->elem) == -1) remove(node->Left, elem);
+			else remove(node->Right, elem);
+			balance(node);
+		}
+	}
+	void removeAux(Node<T>*& node) {
+		if (node->Left != nullptr) node->elem = maxim(node->Left);
+		else {
+			Node<T>* aux = node;
+			node = node->Right;
+			delete aux;
+		}
+	}
+	T maxim(Node<T>*& node) {
+		if (node->Right == nullptr) {
+			Node<T>* aux = node;
+			node = node->Left;
+			T auxElem = aux->elem;
+			delete aux;
+			return auxElem;
+		}
+		else {
+			T auxElem = maxim(node->Right);
+			balance(node);
+			return auxElem;
+		}
+	}
 };
+
+
