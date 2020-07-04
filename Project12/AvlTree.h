@@ -41,54 +41,54 @@ public:
 	}
 	void Clear() { clear(root); }
 	int Length() { return length; }
-	void Add(T elem, int row) { add(root, elem, row); }
+	void Add(T elem) { add(root, elem); }
 	void Remove(T elem) { remove(root, elem); }
-	T Search(T elem) { return search(root, elem); }
+	int Search(T elem) { return search(root, elem); }
 
-	list<T>* Equals(T elem) {
-		list<T>* elems = new list<T>();
-		equals(root, elem, elems);
-		return elems;
+	list<int>* Equals(T elem) {
+		list<int>* rows = new list<int>();
+		equals(root, elem, rows);
+		return rows;
 	}
-	list<T>* GreaterThan(T elem){
-		list<T>* elems = new list<T>();
-		greaterThan(root, elem, elems);
-		return elems;
+	list<int>* GreaterThan(T elem){
+		list<int>* rows = new list<int>();
+		greaterThan(root, elem, rows);
+		return rows;
 	}
-	list<T>* LessThan(T elem){
-		list<T>* elems = new list<T>();
-		lessThan(root, elem, elems);
-		return elems;
+	list<int>* LessThan(T elem){
+		list<int>* rows = new list<int>();
+		lessThan(root, elem, rows);
+		return rows;
 	}
-	list<T>* Contains(string searcher) {
-		list<T>* elems = new list<T>();
-		contains(root, searcher, elems);
-		return elems;
+	list<int>* Contains(string searcher) {
+		list<int>* rows = new list<int>();
+		contains(root, searcher, rows);
+		return rows;
 	}
-	list<T>* NotContains(string searcher) {
-		list<T>* elems = new list<T>();
-		notContains(root, searcher, elems);
-		return elems;
+	list<int>* NotContains(string searcher) {
+		list<int>* rows = new list<int>();
+		notContains(root, searcher, rows);
+		return rows;
 	}
-	list<T>* StartWith(string searcher) {
-		list<T>* elems = new list<T>();
-		startWith(root, searcher, elems);
-		return elems;
+	list<int>* StartWith(string searcher) {
+		list<int>* rows = new list<int>();
+		startWith(root, searcher, rows);
+		return rows;
 	}
-	list<T>* EndWith(string searcher) {
-		list<T>* elems = new list<T>();
-		endWith(root, searcher, elems);
-		return elems;
+	list<int>* EndWith(string searcher) {
+		list<int>* rows = new list<int>();
+		endWith(root, searcher, rows);
+		return rows;
 	}
-	list<T>* InOrder() {
-		list<T>* elems = new list<T>();
-		inOrder(root, elems);
-		return elems;
+	list<int>* InOrder() {
+		list<int>* rows = new list<int>();
+		inOrder(root, rows);
+		return rows;
 	}
-	list<T>* InReverse() {
-		list<T>* elems = new list<T>();
-		inReverse(root, elems);
-		return elems;
+	list<int>* InReverse() {
+		list<int>* rows = new list<int>();
+		inReverse(root, rows);
+		return rows;
 	}
 
 private:
@@ -103,13 +103,13 @@ private:
 	int height(Node<T> *&node){
 		return node == nullptr ? 0 : node->height;
 	}
-	void add(Node<T> *&node, T elem, int row){
+	void add(Node<T> *&node, T elem){
 		if (node == nullptr){
-			node = new Node<T>(elem, row);
+			node = new Node<T>(elem, length);
 			length++;
 		}
 		else{
-			add(compare(elem, node->elem) == -1 ? node->Left : node->Right, elem, row);
+			add(compare(elem, node->elem) == -1 ? node->Left : node->Right, elem);
 			balance(node);
 		}
 	}
@@ -159,9 +159,9 @@ private:
 			updateHeight(node);
 		}
 	}
-	T search(Node<T> *&node, T elem){
-		if (node == nullptr) { return 0; }
-		if (compare(elem, node->elem) == 0) return elem;
+	int search(Node<T> *&node, T elem){
+		if (node == nullptr) { return -1; }
+		if (compare(elem, node->elem) == 0) return node->Row;
 		else{
 			if (compare(elem, node->elem) == 1){
 				return search(node->Right, elem);
@@ -171,79 +171,79 @@ private:
 			}
 		}
 	}
-	void equals(Node<T> *&node, T elem, list<T>* elems){
+	void equals(Node<T> *&node, T elem, list<int>* rows){
 		if (node == nullptr) return;
 		if (compare(elem, node->elem) == 0) {
-			elems->push_back(elem);
-			equals(node->Right, elem, elems);
-			equals(node->Left, elem, elems);
+			rows->push_back(node->Row);
+			equals(node->Right, elem, rows);
+			equals(node->Left, elem, rows);
 		}
 		else{
 			if (compare(elem, node->elem) == 1){
-				equals(node->Right, elem, elems);
+				equals(node->Right, elem, rows);
 			}
 			else if (compare(elem, node->elem) == -1){
-				equals(node->Left, elem, elems);
+				equals(node->Left, elem, rows);
 			}
 		}
 	}
-	void greaterThan(Node<T> *&node, T elem, list<T>* elems){
+	void greaterThan(Node<T> *&node, T elem, list<int>* rows){
 		if (node == nullptr) return;
 		if (compare(elem, node->elem) == -1){
-			elems->push_back(node->elem);
-			greaterThan(node->Right, elem, elems);
-			greaterThan(node->Left, elem, elems);
+			rows->push_back(node->Row);
+			greaterThan(node->Right, elem, rows);
+			greaterThan(node->Left, elem, rows);
 		}
 		else {
-			greaterThan(node->Right, elem, elems);
+			greaterThan(node->Right, elem, rows);
 		}
 	}
-	void lessThan(Node<T>*& node, T elem, list<T>* elems) {
+	void lessThan(Node<T>*& node, T elem, list<int>* rows) {
 		if (node == nullptr) return;
 		if (compare(elem, node->elem) == 1){
-			elems->push_back(node->elem);
-			lessThan(node->Right, elem, elems);
-			lessThan(node->Left, elem, elems);
+			rows->push_back(node->Row);
+			lessThan(node->Right, elem, rows);
+			lessThan(node->Left, elem, rows);
 		}
 		else {
-			lessThan(node->Left, elem, elems);
+			lessThan(node->Left, elem, rows);
 		}
 	}
-	void contains(Node<T>*& node, string searcher, list<T>* elems) {
+	void contains(Node<T>*& node, string searcher, list<int>* rows) {
 		if (node == nullptr) return;
-		if (checkContains(searcher, node->elem)) elems->push_back(node->elem);
-		contains(node->Right, searcher, elems);
-		contains(node->Left, searcher, elems);
+		if (checkContains(searcher, node->elem)) rows->push_back(node->Row);
+		contains(node->Right, searcher, rows);
+		contains(node->Left, searcher, rows);
 	}
-	void notContains(Node<T>*& node, string searcher, list<T>* elems) {
+	void notContains(Node<T>*& node, string searcher, list<int>* rows) {
 		if (node == nullptr) return;
-		if (!checkContains(searcher, node->elem)) elems->push_back(node->elem);
-		notContains(node->Right, searcher, elems);
-		notContains(node->Left, searcher, elems);
+		if (!checkContains(searcher, node->elem)) rows->push_back(node->Row);
+		notContains(node->Right, searcher, rows);
+		notContains(node->Left, searcher, rows);
 	}
-	void startWith (Node<T>*& node, string searcher, list<T>* elems) {
+	void startWith (Node<T>*& node, string searcher, list<int>* rows) {
 		if (node == nullptr) return;
-		if (checkStart(searcher, node->elem)) elems->push_back(node->elem);
-		startWith(node->Right, searcher, elems);
-		startWith(node->Left, searcher, elems);
+		if (checkStart(searcher, node->elem)) rows->push_back(node->Row);
+		startWith(node->Right, searcher, rows);
+		startWith(node->Left, searcher, rows);
 	}
-	void endWith(Node<T>*& node, string searcher, list<T>* elems){
+	void endWith(Node<T>*& node, string searcher, list<int>* rows){
 		if (node == nullptr) return;
-		if (checkEnd(searcher, node->elem)) elems->push_back(node->elem);
-		endWith(node->Right, searcher, elems);
-		endWith(node->Left, searcher,elems);
+		if (checkEnd(searcher, node->elem)) rows->push_back(node->Row);
+		endWith(node->Right, searcher, rows);
+		endWith(node->Left, searcher,rows);
 	}
-	void inOrder(Node<T> *&node, list<T>* elems) {
+	void inOrder(Node<T> *&node, list<int>* rows) {
 		if (node == nullptr) return;
-		inOrder(node->Left, elems);
-		elems->push_back(node->elem);
-		inOrder(node->Right, elems);
+		inOrder(node->Left, rows);
+		rows->push_back(node->Row);
+		inOrder(node->Right, rows);
 	}
-	void inReverse(Node<T>*& node, list<T>* elems) {
+	void inReverse(Node<T>*& node, list<int>* rows) {
 		if (node == nullptr) return;
-		inReverse(node->Left, elems);
-		elems->push_front(node->elem);
-		inReverse(node->Right, elems);
+		inReverse(node->Left, rows);
+		rows->push_front(node->Row);
+		inReverse(node->Right, rows);
 	}
 	void remove(Node<T>*& node, T elem) {
 		if (node == nullptr) return;

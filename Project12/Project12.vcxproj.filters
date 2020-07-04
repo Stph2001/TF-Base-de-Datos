@@ -32,10 +32,13 @@
     <ClInclude Include="ArrayColumn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rows.h">
+    <ClInclude Include="AvlTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AvlTree.h">
+    <ClInclude Include="AuxMethods.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

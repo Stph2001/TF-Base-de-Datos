@@ -10,13 +10,13 @@ private:
 
 public:
 	ArrayColumn(){
-		//columns = new map<string, Column<T>*>();
 	}
 	~ArrayColumn(){
 		if (columns != nullptr) {
 			columns.erase();
 		}
 		deleteTree();
+		delete os;
 	}
 	void AddColumn(string nameColumn){
 		columns[nameColumn] = new Column<T>();
@@ -25,34 +25,34 @@ public:
 	void Remove(T elem, string nameColumn){
 		return columns[nameColumn]->Remove(elem);
 	}
-	T Search(T elem, string nameColumn){
+	int Search(T elem, string nameColumn){
 		return columns[nameColumn]->Search(elem);
 	}
-	list<T>* GreaterThan(T elem, string nameColumn){
+	list<int>* GreaterThan(T elem, string nameColumn){
 		return columns[nameColumn]->GreaterThan(elem);
 	}
-	list<T>* LessThan(T elem, string nameColumn){
+	list<int>* LessThan(T elem, string nameColumn){
 		return columns[nameColumn]->LessThan(elem);
 	}
-	list<T>* Equals(T elem, string nameColumn) {
+	list<int>* Equals(T elem, string nameColumn) {
 		return columns[nameColumn]->Equals(elem);
 	}
-	list<T>* Contains(string searcher, string nameColumn) {
+	list<int>* Contains(string searcher, string nameColumn) {
 		return columns[nameColumn]->Contains(searcher);
 	}
-	list<T>* NotContains(string searcher, string nameColumn){
+	list<int>* NotContains(string searcher, string nameColumn){
 		return columns[nameColumn]->NotContains(searcher);
 	}
-	list<T>* StartWith(string searcher, string nameColumn){
+	list<int>* StartWith(string searcher, string nameColumn){
 		return columns[nameColumn]->StartWith(searcher);
 	}
-	list<T>* EndWith(string searcher, string nameColumn) {
+	list<int>* EndWith(string searcher, string nameColumn) {
 		return columns[nameColumn]->EndWith(searcher);
 	}
-	list<T>* InOrder(string nameColumn) {
+	list<int>* InOrder(string nameColumn) {
 		return columns[nameColumn]->InOrder();
 	}
-	list<T>* InReverse(string nameColumn) {
+	list<int>* InReverse(string nameColumn) {
 		return columns[nameColumn]->InReverse();
 	}
 	void IndexColumn(string nameColumn, function<int(T, T)> c, function<bool(string, T)> h, function<bool(string, T)> s, function<bool(string, T)> e){
@@ -70,6 +70,12 @@ public:
 	}
 	void AddToColumn(T elem, string nameColumn){
 		columns[nameColumn]->Add(elem);
+	}
+	void SaveDataColumn(Archive* os) {
+		for (map<string, Column<T>*>::iterator it = columns.begin(); it != columns.end(); it++) {
+			if (it->second != nullptr)
+				it->second->SaveData(os);
+		}
 	}
 };
 

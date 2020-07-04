@@ -121,10 +121,11 @@
     <ClCompile Include="Tabla_Forms.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Archive.h" />
+    <ClInclude Include="AuxMethods.h" />
     <ClInclude Include="AvlTree.h" />
     <ClInclude Include="ArrayColumn.h" />
     <ClInclude Include="Column.h" />
-    <ClInclude Include="Rows.h" />
     <ClInclude Include="Tabla_Forms.h">
       <FileType>CppForm</FileType>
     </ClInclude>

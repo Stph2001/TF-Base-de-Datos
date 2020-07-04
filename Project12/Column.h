@@ -2,6 +2,7 @@
 #include <list>
 #include <iostream>
 #include "AvlTree.h"
+#include "Archive.h"
 using namespace std;
 
 template<typename T>
@@ -23,7 +24,7 @@ public:
 	}
 	void Add(T elem) {
 		datas->push_back(elem);
-		if (avlTree != nullptr) avlTree->Add(elem, datas->size() - 1);
+		if (avlTree != nullptr) avlTree->Add(elem);
 	}
 	void Remove(T elem){
 		if (avlTree != nullptr)avlTree->Remove(elem);
@@ -53,47 +54,48 @@ public:
 	void Index(function<int(T, T)> c, function<bool(string, T)> h, function<bool(string, T)> s, function<bool(string, T)> e) {
 		generateTree(c,h, s,e);
 		for (T p : *datas)
-			avlTree->Add(p, datas->size() - 1);
+			avlTree->Add(p);
 	}
-	T Search(T elem) {
+	int Search(T elem) {
 		if (avlTree != nullptr) return avlTree->Search(elem);
-		return 0;
+		return 1;
+
 	}
-	list<T>* Equals(T elem) {
+	list<int>* Equals(T elem) {
 		if (avlTree != nullptr) return avlTree->Equals(elem);
-		return new list<T>();
+		return new list<int>();
 	}
-	list<T>* GreaterThan(T elem) {
+	list<int>* GreaterThan(T elem) {
 		if (avlTree != nullptr) return avlTree->GreaterThan(elem);
-		return new list<T>();
+		return new list<int>();
 	}
-	list<T>* LessThan(T elem) {
+	list<int>* LessThan(T elem) {
 		if (avlTree != nullptr) return avlTree->LessThan(elem);
-		return new list<T>();
+		return new list<int>();
 	}
-	list<T>* Contains(string searcher) {
+	list<int>* Contains(string searcher) {
 		if (avlTree != nullptr) return avlTree->Contains(searcher);
-		return new list<T>();
+		return new list<int>();
 	}
-	list<T>* NotContains(string searcher) {
+	list<int>* NotContains(string searcher) {
 		if (avlTree != nullptr) return avlTree->NotContains(searcher);
-		return new list<T>();
+		return new list<int>();
 	}
-	list<T>* StartWith(string searcher) {
+	list<int>* StartWith(string searcher) {
 		if (avlTree != nullptr) return avlTree->StartWith(searcher);
-		return new list<T>();
+		return new list<int>();
 	}
-	list<T>* EndWith(string searcher) {
+	list<int>* EndWith(string searcher) {
 		if (avlTree != nullptr) return avlTree->EndWith(searcher);
-		return new list<T>();
+		return new list<int>();
 	}
-	list<T>* InOrder() {
+	list<int>* InOrder() {
 		if (avlTree != nullptr) return avlTree->InOrder();
-		return new list<T>();
+		return new list<int>();
 	}
-	list<T>* InReverse() {
+	list<int>* InReverse() {
 		if (avlTree != nullptr) return avlTree->InReverse();
-		return new list<T>();
+		return new list<int>();
 	}
 	void generateTree(function<int(T, T)> c, function<bool(string, T)> h, function<bool(string, T)> s, function<bool(string, T)> e) {
 		if (avlTree == nullptr)
@@ -105,6 +107,11 @@ public:
 		avlTree->Clear();
 		delete avlTree;
 		avlTree = nullptr;
+	}
+	void SaveData(Archive* os) {
+		for (auto c : *datas) {
+			os->Save(c);
+		}
 	}
 };
 

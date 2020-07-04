@@ -32,11 +32,13 @@ namespace Project12 {
 			panelList.Add(AddDataPnl);
 			panelList.Add(IndexPnl);
 			panelList.Add(FilterPnl);
-			panelList.Add(RemoveDataPnl);
+			panelList.Add(SaveDataPnl);
 
 			for (int i = 0; i < MenuPnl->Controls->Count; i++) {
 				MenuPnl->Controls[i]->MouseEnter += gcnew System::EventHandler(this, &Tabla_Forms::MenuPnl_MouseEnter);
 			}
+			TableDgv->MouseEnter += gcnew System::EventHandler(this, &Tabla_Forms::Tabla_Forms_MouseEnter);
+			TittleTbx->MouseEnter += gcnew System::EventHandler(this, &Tabla_Forms::Tabla_Forms_MouseEnter);
 			Start();
 		}
 
@@ -61,37 +63,37 @@ namespace Project12 {
 		List<Panel^> panelList;
 		int indexEnter, indexExit;
 
-	private: System::Windows::Forms::DataGridView^ TableDgv;
-	private: System::Windows::Forms::Label^ TitleTableTxt;
-	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::Button^ CheckBtn;
-	private: System::Windows::Forms::Panel^ DataTablePnl;
-	private: System::Windows::Forms::Panel^ TableSettingsPnl;
+	public: System::Windows::Forms::DataGridView^ TableDgv;
 
 
 
-	private: System::Windows::Forms::Button^ AddDataColumnBtn;
-	private: System::Windows::Forms::TextBox^ DataColumnTbx;
-	private: System::Windows::Forms::Button^ CreateTableBtn;
-	private: System::Windows::Forms::Label^ NroColumnTxt;
-	private: System::Windows::Forms::Label^ NColumnsTxt;
-	private: System::Windows::Forms::Button^ AddTableNameBtn;
-	private: System::Windows::Forms::TextBox^ TableNameTbx;
-	private: System::Windows::Forms::Label^ TableNameTxt;
-	private: System::Windows::Forms::Button^ jje;
 
-	private: System::Windows::Forms::TextBox^ ColumnNameTbx;
-	private: System::Windows::Forms::Label^ TypeTxt;
-	private: System::Windows::Forms::ComboBox^ TypeCbx;
-	private: System::Windows::Forms::Label^ ColumnNameTxt;
-	private: System::Windows::Forms::Label^ DataColumnTxt;
-	private: System::Windows::Forms::PictureBox^ LoadingPbx;
-	private: System::Windows::Forms::ComboBox^ FilterTypeTbx;
-	private: System::Windows::Forms::Label^ FilterTypeTxt;
-	private: System::Windows::Forms::Label^ CompareDataTxt;
 
-	private: System::Windows::Forms::TextBox^ CompareDataTbx;
-	private: System::Windows::Forms::Button^ NoseBtn;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	private: System::Windows::Forms::Panel^ MenuPnl;
 
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
@@ -143,14 +145,16 @@ private: System::Windows::Forms::TextBox^ NameColumnTbx3;
 
 
 private: System::Windows::Forms::Label^ label4;
-private: System::Windows::Forms::Panel^ RemoveDataPnl;
+private: System::Windows::Forms::Panel^ SaveDataPnl;
 
-private: System::Windows::Forms::Button^ button5;
+private: System::Windows::Forms::Button^ SaveBtn;
+
+
 private: System::Windows::Forms::Label^ label3;
-private: System::Windows::Forms::ComboBox^ comboBox1;
-private: System::Windows::Forms::Label^ label5;
-private: System::Windows::Forms::TextBox^ textBox1;
-private: System::Windows::Forms::Label^ label6;
+
+
+
+
 private: System::Windows::Forms::Timer^ timer2;
 private: System::Windows::Forms::TextBox^ DataTbx;
 private: System::Windows::Forms::Label^ DataTxt;
@@ -165,8 +169,24 @@ private: System::Windows::Forms::Label^ label8;
 private: System::Windows::Forms::TextBox^ NameColumnTbx4;
 
 private: System::Windows::Forms::Label^ label9;
-private: System::Windows::Forms::TextBox^ ExtraDataCbx;
+private: System::Windows::Forms::TextBox^ ExtraDataTbx;
+
 private: System::Windows::Forms::Label^ ExtraDataTxt;
+private: System::Windows::Forms::TextBox^ TittleTbx;
+private: System::Windows::Forms::Button^ btnExport;
+private: System::Windows::Forms::TextBox^ textBox1;
+private: System::Windows::Forms::Label^ label6;
+private: System::Windows::Forms::TextBox^ ExtraDataTbx2;
+
+private: System::Windows::Forms::Label^ label1;
+private: System::Windows::Forms::ComboBox^ FilterTypeCbx2;
+
+private: System::Windows::Forms::Label^ label5;
+private: System::Windows::Forms::Button^ AddFilterBtn;
+private: System::Windows::Forms::TextBox^ textBox2;
+private: System::Windows::Forms::Label^ label10;
+
+
 
 
 
@@ -183,10 +203,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Tabla_Forms::typeid));
 			this->TableDgv = (gcnew System::Windows::Forms::DataGridView());
-			this->TitleTableTxt = (gcnew System::Windows::Forms::Label());
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->CheckBtn = (gcnew System::Windows::Forms::Button());
-			this->DataTablePnl = (gcnew System::Windows::Forms::Panel());
+			this->TittleTbx = (gcnew System::Windows::Forms::TextBox());
 			this->AddDataPnl = (gcnew System::Windows::Forms::Panel());
 			this->DataTbx = (gcnew System::Windows::Forms::TextBox());
 			this->DataTxt = (gcnew System::Windows::Forms::Label());
@@ -198,12 +215,9 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->AddDataTxt = (gcnew System::Windows::Forms::Label());
 			this->NameColumnTbx2 = (gcnew System::Windows::Forms::TextBox());
 			this->NameColumnTxt2 = (gcnew System::Windows::Forms::Label());
-			this->NoseBtn = (gcnew System::Windows::Forms::Button());
-			this->RemoveDataPnl = (gcnew System::Windows::Forms::Panel());
-			this->button5 = (gcnew System::Windows::Forms::Button());
+			this->SaveDataPnl = (gcnew System::Windows::Forms::Panel());
+			this->SaveBtn = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
-			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->IndexPnl = (gcnew System::Windows::Forms::Panel());
@@ -211,8 +225,6 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->NameColumnTbx3 = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->CompareDataTxt = (gcnew System::Windows::Forms::Label());
-			this->CompareDataTbx = (gcnew System::Windows::Forms::TextBox());
 			this->AddColumnPnl = (gcnew System::Windows::Forms::Panel());
 			this->AddColumnBtn = (gcnew System::Windows::Forms::Button());
 			this->AddColumnTxt = (gcnew System::Windows::Forms::Label());
@@ -220,25 +232,8 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->ColumnTypeTxt = (gcnew System::Windows::Forms::Label());
 			this->NameColumnTbx = (gcnew System::Windows::Forms::TextBox());
 			this->NameColumnTxt = (gcnew System::Windows::Forms::Label());
-			this->FilterTypeTbx = (gcnew System::Windows::Forms::ComboBox());
-			this->FilterTypeTxt = (gcnew System::Windows::Forms::Label());
-			this->LoadingPbx = (gcnew System::Windows::Forms::PictureBox());
-			this->TableSettingsPnl = (gcnew System::Windows::Forms::Panel());
-			this->DataColumnTxt = (gcnew System::Windows::Forms::Label());
-			this->AddDataColumnBtn = (gcnew System::Windows::Forms::Button());
-			this->DataColumnTbx = (gcnew System::Windows::Forms::TextBox());
-			this->CreateTableBtn = (gcnew System::Windows::Forms::Button());
-			this->NroColumnTxt = (gcnew System::Windows::Forms::Label());
-			this->NColumnsTxt = (gcnew System::Windows::Forms::Label());
-			this->AddTableNameBtn = (gcnew System::Windows::Forms::Button());
-			this->TableNameTbx = (gcnew System::Windows::Forms::TextBox());
-			this->TableNameTxt = (gcnew System::Windows::Forms::Label());
-			this->jje = (gcnew System::Windows::Forms::Button());
-			this->ColumnNameTbx = (gcnew System::Windows::Forms::TextBox());
-			this->TypeTxt = (gcnew System::Windows::Forms::Label());
-			this->TypeCbx = (gcnew System::Windows::Forms::ComboBox());
-			this->ColumnNameTxt = (gcnew System::Windows::Forms::Label());
 			this->MenuPnl = (gcnew System::Windows::Forms::Panel());
+			this->btnExport = (gcnew System::Windows::Forms::Button());
 			this->btnFilter = (gcnew System::Windows::Forms::Button());
 			this->btnIndex = (gcnew System::Windows::Forms::Button());
 			this->btnAddData = (gcnew System::Windows::Forms::Button());
@@ -247,7 +242,14 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->FilterPnl = (gcnew System::Windows::Forms::Panel());
-			this->ExtraDataCbx = (gcnew System::Windows::Forms::TextBox());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->label10 = (gcnew System::Windows::Forms::Label());
+			this->AddFilterBtn = (gcnew System::Windows::Forms::Button());
+			this->ExtraDataTbx2 = (gcnew System::Windows::Forms::TextBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->FilterTypeCbx2 = (gcnew System::Windows::Forms::ComboBox());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->ExtraDataTbx = (gcnew System::Windows::Forms::TextBox());
 			this->ExtraDataTxt = (gcnew System::Windows::Forms::Label());
 			this->FilterBtn = (gcnew System::Windows::Forms::Button());
 			this->label7 = (gcnew System::Windows::Forms::Label());
@@ -256,13 +258,10 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->NameColumnTbx4 = (gcnew System::Windows::Forms::TextBox());
 			this->label9 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->TableDgv))->BeginInit();
-			this->DataTablePnl->SuspendLayout();
 			this->AddDataPnl->SuspendLayout();
-			this->RemoveDataPnl->SuspendLayout();
+			this->SaveDataPnl->SuspendLayout();
 			this->IndexPnl->SuspendLayout();
 			this->AddColumnPnl->SuspendLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->LoadingPbx))->BeginInit();
-			this->TableSettingsPnl->SuspendLayout();
 			this->MenuPnl->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			this->FilterPnl->SuspendLayout();
@@ -273,70 +272,31 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->TableDgv->AllowUserToAddRows = false;
 			this->TableDgv->AllowUserToDeleteRows = false;
 			this->TableDgv->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->TableDgv->Location = System::Drawing::Point(9, 74);
+			this->TableDgv->Location = System::Drawing::Point(47, 63);
 			this->TableDgv->Margin = System::Windows::Forms::Padding(2);
 			this->TableDgv->Name = L"TableDgv";
 			this->TableDgv->RowHeadersWidth = 51;
 			this->TableDgv->RowTemplate->Height = 24;
-			this->TableDgv->Size = System::Drawing::Size(776, 240);
+			this->TableDgv->Size = System::Drawing::Size(770, 288);
 			this->TableDgv->TabIndex = 0;
 			this->TableDgv->CellClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &Tabla_Forms::TableDgv_CellClick);
 			// 
-			// TitleTableTxt
+			// TittleTbx
 			// 
-			this->TitleTableTxt->AutoSize = true;
-			this->TitleTableTxt->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic)),
-				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->TitleTableTxt->Location = System::Drawing::Point(358, 34);
-			this->TitleTableTxt->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->TitleTableTxt->Name = L"TitleTableTxt";
-			this->TitleTableTxt->RightToLeft = System::Windows::Forms::RightToLeft::No;
-			this->TitleTableTxt->Size = System::Drawing::Size(71, 31);
-			this->TitleTableTxt->TabIndex = 1;
-			this->TitleTableTxt->Text = L"Title";
-			this->TitleTableTxt->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(7, 2);
-			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(46, 13);
-			this->label1->TabIndex = 2;
-			this->label1->Text = L"Options:";
-			// 
-			// CheckBtn
-			// 
-			this->CheckBtn->Location = System::Drawing::Point(630, 27);
-			this->CheckBtn->Margin = System::Windows::Forms::Padding(2);
-			this->CheckBtn->Name = L"CheckBtn";
-			this->CheckBtn->Size = System::Drawing::Size(81, 27);
-			this->CheckBtn->TabIndex = 3;
-			this->CheckBtn->Text = L"Comprobar";
-			this->CheckBtn->UseVisualStyleBackColor = true;
-			this->CheckBtn->Click += gcnew System::EventHandler(this, &Tabla_Forms::button1_Click);
-			// 
-			// DataTablePnl
-			// 
-			this->DataTablePnl->Controls->Add(this->NoseBtn);
-			this->DataTablePnl->Controls->Add(this->CompareDataTxt);
-			this->DataTablePnl->Controls->Add(this->CompareDataTbx);
-			this->DataTablePnl->Controls->Add(this->FilterTypeTbx);
-			this->DataTablePnl->Controls->Add(this->FilterTypeTxt);
-			this->DataTablePnl->Controls->Add(this->LoadingPbx);
-			this->DataTablePnl->Controls->Add(this->TableDgv);
-			this->DataTablePnl->Controls->Add(this->TitleTableTxt);
-			this->DataTablePnl->Controls->Add(this->label1);
-			this->DataTablePnl->Controls->Add(this->CheckBtn);
-			this->DataTablePnl->Location = System::Drawing::Point(32, 70);
-			this->DataTablePnl->Margin = System::Windows::Forms::Padding(2);
-			this->DataTablePnl->Name = L"DataTablePnl";
-			this->DataTablePnl->Size = System::Drawing::Size(785, 322);
-			this->DataTablePnl->TabIndex = 9;
+			this->TittleTbx->BackColor = System::Drawing::SystemColors::Control;
+			this->TittleTbx->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			this->TittleTbx->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic))));
+			this->TittleTbx->Location = System::Drawing::Point(47, 26);
+			this->TittleTbx->MaxLength = 40;
+			this->TittleTbx->Name = L"TittleTbx";
+			this->TittleTbx->Size = System::Drawing::Size(770, 31);
+			this->TittleTbx->TabIndex = 10;
+			this->TittleTbx->Text = L"Tittle";
+			this->TittleTbx->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			// 
 			// AddDataPnl
 			// 
+			this->AddDataPnl->BackColor = System::Drawing::SystemColors::ActiveCaption;
 			this->AddDataPnl->Controls->Add(this->DataTbx);
 			this->AddDataPnl->Controls->Add(this->DataTxt);
 			this->AddDataPnl->Controls->Add(this->radioButton2);
@@ -347,7 +307,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->AddDataPnl->Controls->Add(this->AddDataTxt);
 			this->AddDataPnl->Controls->Add(this->NameColumnTbx2);
 			this->AddDataPnl->Controls->Add(this->NameColumnTxt2);
-			this->AddDataPnl->Location = System::Drawing::Point(962, 192);
+			this->AddDataPnl->Location = System::Drawing::Point(315, 9);
 			this->AddDataPnl->Name = L"AddDataPnl";
 			this->AddDataPnl->Size = System::Drawing::Size(54, 40);
 			this->AddDataPnl->TabIndex = 13;
@@ -445,70 +405,42 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->NameColumnTxt2->TabIndex = 0;
 			this->NameColumnTxt2->Text = L"Nombre de la columna";
 			// 
-			// NoseBtn
+			// SaveDataPnl
 			// 
-			this->NoseBtn->Location = System::Drawing::Point(232, 17);
-			this->NoseBtn->Name = L"NoseBtn";
-			this->NoseBtn->Size = System::Drawing::Size(75, 23);
-			this->NoseBtn->TabIndex = 15;
-			this->NoseBtn->Text = L"Nose";
-			this->NoseBtn->UseVisualStyleBackColor = true;
+			this->SaveDataPnl->BackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->SaveDataPnl->Controls->Add(this->SaveBtn);
+			this->SaveDataPnl->Controls->Add(this->label3);
+			this->SaveDataPnl->Controls->Add(this->textBox1);
+			this->SaveDataPnl->Controls->Add(this->label6);
+			this->SaveDataPnl->Location = System::Drawing::Point(529, 12);
+			this->SaveDataPnl->Name = L"SaveDataPnl";
+			this->SaveDataPnl->Size = System::Drawing::Size(47, 37);
+			this->SaveDataPnl->TabIndex = 13;
 			// 
-			// RemoveDataPnl
+			// SaveBtn
 			// 
-			this->RemoveDataPnl->Controls->Add(this->button5);
-			this->RemoveDataPnl->Controls->Add(this->label3);
-			this->RemoveDataPnl->Controls->Add(this->comboBox1);
-			this->RemoveDataPnl->Controls->Add(this->label5);
-			this->RemoveDataPnl->Controls->Add(this->textBox1);
-			this->RemoveDataPnl->Controls->Add(this->label6);
-			this->RemoveDataPnl->Location = System::Drawing::Point(967, 30);
-			this->RemoveDataPnl->Name = L"RemoveDataPnl";
-			this->RemoveDataPnl->Size = System::Drawing::Size(49, 36);
-			this->RemoveDataPnl->TabIndex = 13;
-			// 
-			// button5
-			// 
-			this->button5->Location = System::Drawing::Point(36, 262);
-			this->button5->Name = L"button5";
-			this->button5->Size = System::Drawing::Size(144, 23);
-			this->button5->TabIndex = 6;
-			this->button5->Text = L"button4";
-			this->button5->UseVisualStyleBackColor = true;
+			this->SaveBtn->Location = System::Drawing::Point(36, 239);
+			this->SaveBtn->Name = L"SaveBtn";
+			this->SaveBtn->Size = System::Drawing::Size(144, 23);
+			this->SaveBtn->TabIndex = 6;
+			this->SaveBtn->Text = L"Exportar";
+			this->SaveBtn->UseVisualStyleBackColor = true;
+			this->SaveBtn->Click += gcnew System::EventHandler(this, &Tabla_Forms::SaveBtn_Click);
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Montserrat", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label3->Location = System::Drawing::Point(11, 24);
+			this->label3->Location = System::Drawing::Point(54, 90);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(154, 26);
+			this->label3->Size = System::Drawing::Size(97, 26);
 			this->label3->TabIndex = 5;
-			this->label3->Text = L"Remover Dato";
-			// 
-			// comboBox1
-			// 
-			this->comboBox1->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Números", L"Palabras", L"Letras" });
-			this->comboBox1->Location = System::Drawing::Point(13, 184);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(187, 21);
-			this->comboBox1->TabIndex = 4;
-			// 
-			// label5
-			// 
-			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(10, 162);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(87, 13);
-			this->label5->TabIndex = 2;
-			this->label5->Text = L"Tipo de Columna";
+			this->label3->Text = L"Exportar";
 			// 
 			// textBox1
 			// 
-			this->textBox1->Location = System::Drawing::Point(13, 116);
+			this->textBox1->Location = System::Drawing::Point(13, 171);
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(187, 20);
 			this->textBox1->TabIndex = 1;
@@ -516,21 +448,22 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(10, 96);
+			this->label6->Location = System::Drawing::Point(10, 151);
 			this->label6->Name = L"label6";
-			this->label6->Size = System::Drawing::Size(113, 13);
+			this->label6->Size = System::Drawing::Size(99, 13);
 			this->label6->TabIndex = 0;
-			this->label6->Text = L"Nombre de la columna";
+			this->label6->Text = L"Nombre del archivo";
 			// 
 			// IndexPnl
 			// 
+			this->IndexPnl->BackColor = System::Drawing::SystemColors::ActiveCaption;
 			this->IndexPnl->Controls->Add(this->IndexBtn);
 			this->IndexPnl->Controls->Add(this->label2);
 			this->IndexPnl->Controls->Add(this->NameColumnTbx3);
 			this->IndexPnl->Controls->Add(this->label4);
-			this->IndexPnl->Location = System::Drawing::Point(968, 80);
+			this->IndexPnl->Location = System::Drawing::Point(600, 9);
 			this->IndexPnl->Name = L"IndexPnl";
-			this->IndexPnl->Size = System::Drawing::Size(48, 19);
+			this->IndexPnl->Size = System::Drawing::Size(80, 39);
 			this->IndexPnl->TabIndex = 13;
 			// 
 			// IndexBtn
@@ -570,33 +503,18 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->label4->TabIndex = 0;
 			this->label4->Text = L"Nombre de la columna";
 			// 
-			// CompareDataTxt
-			// 
-			this->CompareDataTxt->AutoSize = true;
-			this->CompareDataTxt->Location = System::Drawing::Point(153, 27);
-			this->CompareDataTxt->Name = L"CompareDataTxt";
-			this->CompareDataTxt->Size = System::Drawing::Size(30, 13);
-			this->CompareDataTxt->TabIndex = 14;
-			this->CompareDataTxt->Text = L"Dato";
-			// 
-			// CompareDataTbx
-			// 
-			this->CompareDataTbx->Location = System::Drawing::Point(156, 46);
-			this->CompareDataTbx->Name = L"CompareDataTbx";
-			this->CompareDataTbx->Size = System::Drawing::Size(100, 20);
-			this->CompareDataTbx->TabIndex = 12;
-			// 
 			// AddColumnPnl
 			// 
+			this->AddColumnPnl->BackColor = System::Drawing::SystemColors::ActiveCaption;
 			this->AddColumnPnl->Controls->Add(this->AddColumnBtn);
 			this->AddColumnPnl->Controls->Add(this->AddColumnTxt);
 			this->AddColumnPnl->Controls->Add(this->ColumnTypeCbx);
 			this->AddColumnPnl->Controls->Add(this->ColumnTypeTxt);
 			this->AddColumnPnl->Controls->Add(this->NameColumnTbx);
 			this->AddColumnPnl->Controls->Add(this->NameColumnTxt);
-			this->AddColumnPnl->Location = System::Drawing::Point(962, 126);
+			this->AddColumnPnl->Location = System::Drawing::Point(246, 9);
 			this->AddColumnPnl->Name = L"AddColumnPnl";
-			this->AddColumnPnl->Size = System::Drawing::Size(54, 27);
+			this->AddColumnPnl->Size = System::Drawing::Size(51, 34);
 			this->AddColumnPnl->TabIndex = 12;
 			// 
 			// AddColumnBtn
@@ -624,7 +542,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// 
 			this->ColumnTypeCbx->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->ColumnTypeCbx->FormattingEnabled = true;
-			this->ColumnTypeCbx->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Ninguno", L"Numeros", L"Palabras", L"Letras" });
+			this->ColumnTypeCbx->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Ninguno", L"Palabras", L"Letras", L"Numeros" });
 			this->ColumnTypeCbx->Location = System::Drawing::Point(13, 184);
 			this->ColumnTypeCbx->Name = L"ColumnTypeCbx";
 			this->ColumnTypeCbx->Size = System::Drawing::Size(187, 21);
@@ -655,221 +573,52 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->NameColumnTxt->TabIndex = 0;
 			this->NameColumnTxt->Text = L"Nombre de la columna";
 			// 
-			// FilterTypeTbx
-			// 
-			this->FilterTypeTbx->FormattingEnabled = true;
-			this->FilterTypeTbx->Items->AddRange(gcnew cli::array< System::Object^  >(10) {
-				L"Buscar", L"Igual a", L"Mayor que", L"Menor que",
-					L"Contiene", L"No contiene", L"Inicia con", L"Termina con", L"Orden ascendente", L"Orden descendente"
-			});
-			this->FilterTypeTbx->Location = System::Drawing::Point(13, 48);
-			this->FilterTypeTbx->Name = L"FilterTypeTbx";
-			this->FilterTypeTbx->Size = System::Drawing::Size(121, 21);
-			this->FilterTypeTbx->TabIndex = 11;
-			this->FilterTypeTbx->Text = L"Ninguno";
-			// 
-			// FilterTypeTxt
-			// 
-			this->FilterTypeTxt->AutoSize = true;
-			this->FilterTypeTxt->Location = System::Drawing::Point(10, 27);
-			this->FilterTypeTxt->Name = L"FilterTypeTxt";
-			this->FilterTypeTxt->Size = System::Drawing::Size(65, 13);
-			this->FilterTypeTxt->TabIndex = 10;
-			this->FilterTypeTxt->Text = L"Tipo de filtro";
-			// 
-			// LoadingPbx
-			// 
-			this->LoadingPbx->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"LoadingPbx.Image")));
-			this->LoadingPbx->Location = System::Drawing::Point(445, 10);
-			this->LoadingPbx->Name = L"LoadingPbx";
-			this->LoadingPbx->Size = System::Drawing::Size(30, 30);
-			this->LoadingPbx->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
-			this->LoadingPbx->TabIndex = 9;
-			this->LoadingPbx->TabStop = false;
-			// 
-			// TableSettingsPnl
-			// 
-			this->TableSettingsPnl->Controls->Add(this->DataColumnTxt);
-			this->TableSettingsPnl->Controls->Add(this->AddDataColumnBtn);
-			this->TableSettingsPnl->Controls->Add(this->DataColumnTbx);
-			this->TableSettingsPnl->Controls->Add(this->CreateTableBtn);
-			this->TableSettingsPnl->Controls->Add(this->NroColumnTxt);
-			this->TableSettingsPnl->Controls->Add(this->NColumnsTxt);
-			this->TableSettingsPnl->Controls->Add(this->AddTableNameBtn);
-			this->TableSettingsPnl->Controls->Add(this->TableNameTbx);
-			this->TableSettingsPnl->Controls->Add(this->TableNameTxt);
-			this->TableSettingsPnl->Controls->Add(this->jje);
-			this->TableSettingsPnl->Controls->Add(this->ColumnNameTbx);
-			this->TableSettingsPnl->Controls->Add(this->TypeTxt);
-			this->TableSettingsPnl->Controls->Add(this->TypeCbx);
-			this->TableSettingsPnl->Controls->Add(this->ColumnNameTxt);
-			this->TableSettingsPnl->Location = System::Drawing::Point(32, 0);
-			this->TableSettingsPnl->Margin = System::Windows::Forms::Padding(2);
-			this->TableSettingsPnl->Name = L"TableSettingsPnl";
-			this->TableSettingsPnl->Size = System::Drawing::Size(785, 66);
-			this->TableSettingsPnl->TabIndex = 10;
-			// 
-			// DataColumnTxt
-			// 
-			this->DataColumnTxt->AutoSize = true;
-			this->DataColumnTxt->Location = System::Drawing::Point(273, 9);
-			this->DataColumnTxt->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->DataColumnTxt->Name = L"DataColumnTxt";
-			this->DataColumnTxt->Size = System::Drawing::Size(104, 13);
-			this->DataColumnTxt->TabIndex = 27;
-			this->DataColumnTxt->Text = L"Datos de la columna";
-			// 
-			// AddDataColumnBtn
-			// 
-			this->AddDataColumnBtn->Location = System::Drawing::Point(419, 25);
-			this->AddDataColumnBtn->Margin = System::Windows::Forms::Padding(2);
-			this->AddDataColumnBtn->Name = L"AddDataColumnBtn";
-			this->AddDataColumnBtn->Size = System::Drawing::Size(56, 19);
-			this->AddDataColumnBtn->TabIndex = 26;
-			this->AddDataColumnBtn->Text = L"Add";
-			this->AddDataColumnBtn->UseVisualStyleBackColor = true;
-			this->AddDataColumnBtn->Click += gcnew System::EventHandler(this, &Tabla_Forms::button7_Click);
-			// 
-			// DataColumnTbx
-			// 
-			this->DataColumnTbx->Location = System::Drawing::Point(272, 25);
-			this->DataColumnTbx->Margin = System::Windows::Forms::Padding(2);
-			this->DataColumnTbx->Name = L"DataColumnTbx";
-			this->DataColumnTbx->Size = System::Drawing::Size(144, 20);
-			this->DataColumnTbx->TabIndex = 25;
-			// 
-			// CreateTableBtn
-			// 
-			this->CreateTableBtn->BackColor = System::Drawing::SystemColors::ActiveCaption;
-			this->CreateTableBtn->Location = System::Drawing::Point(457, 58);
-			this->CreateTableBtn->Margin = System::Windows::Forms::Padding(2);
-			this->CreateTableBtn->Name = L"CreateTableBtn";
-			this->CreateTableBtn->Size = System::Drawing::Size(254, 52);
-			this->CreateTableBtn->TabIndex = 23;
-			this->CreateTableBtn->Text = L"Create Table";
-			this->CreateTableBtn->UseVisualStyleBackColor = false;
-			this->CreateTableBtn->Click += gcnew System::EventHandler(this, &Tabla_Forms::button8_Click);
-			// 
-			// NroColumnTxt
-			// 
-			this->NroColumnTxt->Location = System::Drawing::Point(361, 72);
-			this->NroColumnTxt->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->NroColumnTxt->Name = L"NroColumnTxt";
-			this->NroColumnTxt->Size = System::Drawing::Size(63, 15);
-			this->NroColumnTxt->TabIndex = 22;
-			this->NroColumnTxt->Text = L"0";
-			// 
-			// NColumnsTxt
-			// 
-			this->NColumnsTxt->Location = System::Drawing::Point(293, 71);
-			this->NColumnsTxt->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->NColumnsTxt->Name = L"NColumnsTxt";
-			this->NColumnsTxt->Size = System::Drawing::Size(63, 15);
-			this->NColumnsTxt->TabIndex = 13;
-			this->NColumnsTxt->Text = L"N Columns:";
-			// 
-			// AddTableNameBtn
-			// 
-			this->AddTableNameBtn->Location = System::Drawing::Point(172, 24);
-			this->AddTableNameBtn->Margin = System::Windows::Forms::Padding(2);
-			this->AddTableNameBtn->Name = L"AddTableNameBtn";
-			this->AddTableNameBtn->Size = System::Drawing::Size(56, 19);
-			this->AddTableNameBtn->TabIndex = 21;
-			this->AddTableNameBtn->Text = L"Add";
-			this->AddTableNameBtn->UseVisualStyleBackColor = true;
-			this->AddTableNameBtn->Click += gcnew System::EventHandler(this, &Tabla_Forms::ButtonTableName_Click);
-			// 
-			// TableNameTbx
-			// 
-			this->TableNameTbx->Location = System::Drawing::Point(13, 24);
-			this->TableNameTbx->Margin = System::Windows::Forms::Padding(2);
-			this->TableNameTbx->Name = L"TableNameTbx";
-			this->TableNameTbx->Size = System::Drawing::Size(156, 20);
-			this->TableNameTbx->TabIndex = 20;
-			// 
-			// TableNameTxt
-			// 
-			this->TableNameTxt->AutoSize = true;
-			this->TableNameTxt->Location = System::Drawing::Point(10, 7);
-			this->TableNameTxt->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->TableNameTxt->Name = L"TableNameTxt";
-			this->TableNameTxt->Size = System::Drawing::Size(70, 13);
-			this->TableNameTxt->TabIndex = 19;
-			this->TableNameTxt->Text = L"Table\'s name";
-			// 
-			// jje
-			// 
-			this->jje->Location = System::Drawing::Point(232, 68);
-			this->jje->Margin = System::Windows::Forms::Padding(2);
-			this->jje->Name = L"jje";
-			this->jje->Size = System::Drawing::Size(56, 19);
-			this->jje->TabIndex = 18;
-			this->jje->Text = L"Add";
-			this->jje->UseVisualStyleBackColor = true;
-			this->jje->Click += gcnew System::EventHandler(this, &Tabla_Forms::ButtonColumnName_Click);
-			// 
-			// ColumnNameTbx
-			// 
-			this->ColumnNameTbx->Location = System::Drawing::Point(112, 68);
-			this->ColumnNameTbx->Margin = System::Windows::Forms::Padding(2);
-			this->ColumnNameTbx->Name = L"ColumnNameTbx";
-			this->ColumnNameTbx->Size = System::Drawing::Size(116, 20);
-			this->ColumnNameTbx->TabIndex = 17;
-			// 
-			// TypeTxt
-			// 
-			this->TypeTxt->AutoSize = true;
-			this->TypeTxt->Location = System::Drawing::Point(12, 52);
-			this->TypeTxt->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->TypeTxt->Name = L"TypeTxt";
-			this->TypeTxt->Size = System::Drawing::Size(31, 13);
-			this->TypeTxt->TabIndex = 16;
-			this->TypeTxt->Text = L"Type";
-			// 
-			// TypeCbx
-			// 
-			this->TypeCbx->FormattingEnabled = true;
-			this->TypeCbx->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"numbers", L"words", L"letters" });
-			this->TypeCbx->Location = System::Drawing::Point(11, 68);
-			this->TypeCbx->Margin = System::Windows::Forms::Padding(2);
-			this->TypeCbx->Name = L"TypeCbx";
-			this->TypeCbx->Size = System::Drawing::Size(92, 21);
-			this->TypeCbx->TabIndex = 15;
-			// 
-			// ColumnNameTxt
-			// 
-			this->ColumnNameTxt->AutoSize = true;
-			this->ColumnNameTxt->Location = System::Drawing::Point(110, 52);
-			this->ColumnNameTxt->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
-			this->ColumnNameTxt->Name = L"ColumnNameTxt";
-			this->ColumnNameTxt->Size = System::Drawing::Size(73, 13);
-			this->ColumnNameTxt->TabIndex = 14;
-			this->ColumnNameTxt->Text = L"Column Name";
-			// 
 			// MenuPnl
 			// 
-			this->MenuPnl->BackColor = System::Drawing::SystemColors::Control;
+			this->MenuPnl->BackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->MenuPnl->Controls->Add(this->btnExport);
 			this->MenuPnl->Controls->Add(this->btnFilter);
 			this->MenuPnl->Controls->Add(this->btnIndex);
 			this->MenuPnl->Controls->Add(this->btnAddData);
 			this->MenuPnl->Controls->Add(this->btnAddColumn);
 			this->MenuPnl->Controls->Add(this->pictureBox1);
-			this->MenuPnl->Location = System::Drawing::Point(-198, 0);
+			this->MenuPnl->Location = System::Drawing::Point(0, 0);
 			this->MenuPnl->Name = L"MenuPnl";
 			this->MenuPnl->Size = System::Drawing::Size(228, 392);
 			this->MenuPnl->TabIndex = 11;
 			this->MenuPnl->MouseEnter += gcnew System::EventHandler(this, &Tabla_Forms::MenuPnl_MouseEnter);
 			// 
+			// btnExport
+			// 
+			this->btnExport->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
+			this->btnExport->FlatAppearance->BorderSize = 0;
+			this->btnExport->FlatAppearance->MouseDownBackColor = System::Drawing::SystemColors::Highlight;
+			this->btnExport->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnExport->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnExport->ForeColor = System::Drawing::Color::Black;
+			this->btnExport->Location = System::Drawing::Point(0, 236);
+			this->btnExport->Margin = System::Windows::Forms::Padding(0);
+			this->btnExport->Name = L"btnExport";
+			this->btnExport->Size = System::Drawing::Size(228, 39);
+			this->btnExport->TabIndex = 5;
+			this->btnExport->Text = L"Exportar";
+			this->btnExport->UseVisualStyleBackColor = false;
+			this->btnExport->Click += gcnew System::EventHandler(this, &Tabla_Forms::btnExport_Click);
+			// 
 			// btnFilter
 			// 
-			this->btnFilter->BackColor = System::Drawing::SystemColors::ActiveBorder;
+			this->btnFilter->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->btnFilter->FlatAppearance->BorderSize = 0;
-			this->btnFilter->FlatAppearance->MouseDownBackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->btnFilter->FlatAppearance->MouseDownBackColor = System::Drawing::SystemColors::Highlight;
 			this->btnFilter->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnFilter->Location = System::Drawing::Point(0, 137);
+			this->btnFilter->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnFilter->ForeColor = System::Drawing::Color::Black;
+			this->btnFilter->Location = System::Drawing::Point(0, 190);
 			this->btnFilter->Margin = System::Windows::Forms::Padding(0);
 			this->btnFilter->Name = L"btnFilter";
-			this->btnFilter->Size = System::Drawing::Size(228, 23);
+			this->btnFilter->Size = System::Drawing::Size(228, 39);
 			this->btnFilter->TabIndex = 4;
 			this->btnFilter->Text = L"Filtrar Columna";
 			this->btnFilter->UseVisualStyleBackColor = false;
@@ -877,14 +626,17 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// 
 			// btnIndex
 			// 
-			this->btnIndex->BackColor = System::Drawing::SystemColors::ActiveBorder;
+			this->btnIndex->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->btnIndex->FlatAppearance->BorderSize = 0;
-			this->btnIndex->FlatAppearance->MouseDownBackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->btnIndex->FlatAppearance->MouseDownBackColor = System::Drawing::SystemColors::Highlight;
 			this->btnIndex->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnIndex->Location = System::Drawing::Point(0, 108);
+			this->btnIndex->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnIndex->ForeColor = System::Drawing::Color::Black;
+			this->btnIndex->Location = System::Drawing::Point(0, 142);
 			this->btnIndex->Margin = System::Windows::Forms::Padding(0);
 			this->btnIndex->Name = L"btnIndex";
-			this->btnIndex->Size = System::Drawing::Size(228, 23);
+			this->btnIndex->Size = System::Drawing::Size(228, 39);
 			this->btnIndex->TabIndex = 3;
 			this->btnIndex->Text = L"Indexar Columna";
 			this->btnIndex->UseVisualStyleBackColor = false;
@@ -892,14 +644,17 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// 
 			// btnAddData
 			// 
-			this->btnAddData->BackColor = System::Drawing::SystemColors::ActiveBorder;
+			this->btnAddData->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->btnAddData->FlatAppearance->BorderSize = 0;
-			this->btnAddData->FlatAppearance->MouseDownBackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->btnAddData->FlatAppearance->MouseDownBackColor = System::Drawing::SystemColors::Highlight;
 			this->btnAddData->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->btnAddData->Location = System::Drawing::Point(0, 80);
+			this->btnAddData->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnAddData->ForeColor = System::Drawing::Color::Black;
+			this->btnAddData->Location = System::Drawing::Point(0, 97);
 			this->btnAddData->Margin = System::Windows::Forms::Padding(0);
 			this->btnAddData->Name = L"btnAddData";
-			this->btnAddData->Size = System::Drawing::Size(228, 23);
+			this->btnAddData->Size = System::Drawing::Size(228, 39);
 			this->btnAddData->TabIndex = 2;
 			this->btnAddData->Text = L"Agregar Dato";
 			this->btnAddData->UseVisualStyleBackColor = false;
@@ -907,14 +662,17 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// 
 			// btnAddColumn
 			// 
-			this->btnAddColumn->BackColor = System::Drawing::SystemColors::ActiveBorder;
+			this->btnAddColumn->BackColor = System::Drawing::SystemColors::GradientActiveCaption;
 			this->btnAddColumn->FlatAppearance->BorderSize = 0;
-			this->btnAddColumn->FlatAppearance->MouseDownBackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->btnAddColumn->FlatAppearance->MouseDownBackColor = System::Drawing::SystemColors::Highlight;
 			this->btnAddColumn->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->btnAddColumn->Font = (gcnew System::Drawing::Font(L"Microsoft YaHei", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->btnAddColumn->ForeColor = System::Drawing::Color::Black;
 			this->btnAddColumn->Location = System::Drawing::Point(0, 53);
 			this->btnAddColumn->Margin = System::Windows::Forms::Padding(0);
 			this->btnAddColumn->Name = L"btnAddColumn";
-			this->btnAddColumn->Size = System::Drawing::Size(228, 23);
+			this->btnAddColumn->Size = System::Drawing::Size(228, 39);
 			this->btnAddColumn->TabIndex = 1;
 			this->btnAddColumn->Text = L"Agregar Columna";
 			this->btnAddColumn->UseVisualStyleBackColor = false;
@@ -923,7 +681,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// pictureBox1
 			// 
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
-			this->pictureBox1->Location = System::Drawing::Point(198, 1);
+			this->pictureBox1->Location = System::Drawing::Point(195, 0);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(30, 33);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
@@ -942,7 +700,15 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// 
 			// FilterPnl
 			// 
-			this->FilterPnl->Controls->Add(this->ExtraDataCbx);
+			this->FilterPnl->BackColor = System::Drawing::SystemColors::ActiveCaption;
+			this->FilterPnl->Controls->Add(this->textBox2);
+			this->FilterPnl->Controls->Add(this->label10);
+			this->FilterPnl->Controls->Add(this->AddFilterBtn);
+			this->FilterPnl->Controls->Add(this->ExtraDataTbx2);
+			this->FilterPnl->Controls->Add(this->label1);
+			this->FilterPnl->Controls->Add(this->FilterTypeCbx2);
+			this->FilterPnl->Controls->Add(this->label5);
+			this->FilterPnl->Controls->Add(this->ExtraDataTbx);
 			this->FilterPnl->Controls->Add(this->ExtraDataTxt);
 			this->FilterPnl->Controls->Add(this->FilterBtn);
 			this->FilterPnl->Controls->Add(this->label7);
@@ -950,23 +716,94 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->FilterPnl->Controls->Add(this->label8);
 			this->FilterPnl->Controls->Add(this->NameColumnTbx4);
 			this->FilterPnl->Controls->Add(this->label9);
-			this->FilterPnl->Location = System::Drawing::Point(972, 275);
+			this->FilterPnl->Location = System::Drawing::Point(823, 0);
 			this->FilterPnl->Name = L"FilterPnl";
-			this->FilterPnl->Size = System::Drawing::Size(44, 40);
+			this->FilterPnl->Size = System::Drawing::Size(205, 392);
 			this->FilterPnl->TabIndex = 13;
 			// 
-			// ExtraDataCbx
+			// textBox2
 			// 
-			this->ExtraDataCbx->Location = System::Drawing::Point(13, 231);
-			this->ExtraDataCbx->Name = L"ExtraDataCbx";
-			this->ExtraDataCbx->Size = System::Drawing::Size(187, 20);
-			this->ExtraDataCbx->TabIndex = 8;
-			this->ExtraDataCbx->Visible = false;
+			this->textBox2->Location = System::Drawing::Point(13, 297);
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(187, 20);
+			this->textBox2->TabIndex = 15;
+			this->textBox2->Visible = false;
+			// 
+			// label10
+			// 
+			this->label10->AutoSize = true;
+			this->label10->Location = System::Drawing::Point(10, 278);
+			this->label10->Name = L"label10";
+			this->label10->Size = System::Drawing::Size(113, 13);
+			this->label10->TabIndex = 14;
+			this->label10->Text = L"Nombre de la columna";
+			this->label10->Visible = false;
+			// 
+			// AddFilterBtn
+			// 
+			this->AddFilterBtn->Location = System::Drawing::Point(36, 257);
+			this->AddFilterBtn->Name = L"AddFilterBtn";
+			this->AddFilterBtn->Size = System::Drawing::Size(144, 23);
+			this->AddFilterBtn->TabIndex = 13;
+			this->AddFilterBtn->Text = L"Añadir filtro";
+			this->AddFilterBtn->UseVisualStyleBackColor = true;
+			this->AddFilterBtn->Click += gcnew System::EventHandler(this, &Tabla_Forms::AddFilterBtn_Click);
+			// 
+			// ExtraDataTbx2
+			// 
+			this->ExtraDataTbx2->Location = System::Drawing::Point(15, 192);
+			this->ExtraDataTbx2->Name = L"ExtraDataTbx2";
+			this->ExtraDataTbx2->Size = System::Drawing::Size(187, 20);
+			this->ExtraDataTbx2->TabIndex = 12;
+			this->ExtraDataTbx2->Visible = false;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(10, 178);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(113, 13);
+			this->label1->TabIndex = 11;
+			this->label1->Text = L"Nombre de la columna";
+			this->label1->Visible = false;
+			// 
+			// FilterTypeCbx2
+			// 
+			this->FilterTypeCbx2->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->FilterTypeCbx2->FormattingEnabled = true;
+			this->FilterTypeCbx2->Items->AddRange(gcnew cli::array< System::Object^  >(11) {
+				L"Ninguno", L"Buscar", L"Iguales a", L"Mayores que",
+					L"Menores que", L"Contiene", L"No contiene", L"Empieza con", L"Termina con", L"Orden ascendente", L"Orden descendente"
+			});
+			this->FilterTypeCbx2->Location = System::Drawing::Point(13, 240);
+			this->FilterTypeCbx2->Name = L"FilterTypeCbx2";
+			this->FilterTypeCbx2->Size = System::Drawing::Size(187, 21);
+			this->FilterTypeCbx2->TabIndex = 10;
+			this->FilterTypeCbx2->Visible = false;
+			this->FilterTypeCbx2->SelectedIndexChanged += gcnew System::EventHandler(this, &Tabla_Forms::FilterTypeCbx2_SelectedIndexChanged);
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(10, 224);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(74, 13);
+			this->label5->TabIndex = 9;
+			this->label5->Text = L"Tipo de filtro 2";
+			this->label5->Visible = false;
+			// 
+			// ExtraDataTbx
+			// 
+			this->ExtraDataTbx->Location = System::Drawing::Point(15, 209);
+			this->ExtraDataTbx->Name = L"ExtraDataTbx";
+			this->ExtraDataTbx->Size = System::Drawing::Size(187, 20);
+			this->ExtraDataTbx->TabIndex = 8;
+			this->ExtraDataTbx->Visible = false;
 			// 
 			// ExtraDataTxt
 			// 
 			this->ExtraDataTxt->AutoSize = true;
-			this->ExtraDataTxt->Location = System::Drawing::Point(10, 211);
+			this->ExtraDataTxt->Location = System::Drawing::Point(12, 190);
 			this->ExtraDataTxt->Name = L"ExtraDataTxt";
 			this->ExtraDataTxt->Size = System::Drawing::Size(113, 13);
 			this->ExtraDataTxt->TabIndex = 7;
@@ -975,7 +812,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// 
 			// FilterBtn
 			// 
-			this->FilterBtn->Location = System::Drawing::Point(36, 274);
+			this->FilterBtn->Location = System::Drawing::Point(36, 300);
 			this->FilterBtn->Name = L"FilterBtn";
 			this->FilterBtn->Size = System::Drawing::Size(144, 23);
 			this->FilterBtn->TabIndex = 6;
@@ -988,7 +825,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->label7->AutoSize = true;
 			this->label7->Font = (gcnew System::Drawing::Font(L"Montserrat", 14.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label7->Location = System::Drawing::Point(19, 45);
+			this->label7->Location = System::Drawing::Point(25, 51);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(168, 26);
 			this->label7->TabIndex = 5;
@@ -1002,7 +839,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 				L"Ninguno", L"Buscar", L"Iguales a", L"Mayores que",
 					L"Menores que", L"Contiene", L"No contiene", L"Empieza con", L"Termina con", L"Orden ascendente", L"Orden descendente"
 			});
-			this->FilterTypeCbx->Location = System::Drawing::Point(13, 170);
+			this->FilterTypeCbx->Location = System::Drawing::Point(15, 159);
 			this->FilterTypeCbx->Name = L"FilterTypeCbx";
 			this->FilterTypeCbx->Size = System::Drawing::Size(187, 21);
 			this->FilterTypeCbx->TabIndex = 4;
@@ -1011,7 +848,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// label8
 			// 
 			this->label8->AutoSize = true;
-			this->label8->Location = System::Drawing::Point(10, 149);
+			this->label8->Location = System::Drawing::Point(12, 138);
 			this->label8->Name = L"label8";
 			this->label8->Size = System::Drawing::Size(65, 13);
 			this->label8->TabIndex = 2;
@@ -1019,7 +856,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// 
 			// NameColumnTbx4
 			// 
-			this->NameColumnTbx4->Location = System::Drawing::Point(13, 111);
+			this->NameColumnTbx4->Location = System::Drawing::Point(15, 115);
 			this->NameColumnTbx4->Name = L"NameColumnTbx4";
 			this->NameColumnTbx4->Size = System::Drawing::Size(187, 20);
 			this->NameColumnTbx4->TabIndex = 1;
@@ -1027,7 +864,7 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			// label9
 			// 
 			this->label9->AutoSize = true;
-			this->label9->Location = System::Drawing::Point(10, 91);
+			this->label9->Location = System::Drawing::Point(12, 99);
 			this->label9->Name = L"label9";
 			this->label9->Size = System::Drawing::Size(113, 13);
 			this->label9->TabIndex = 0;
@@ -1038,37 +875,33 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1028, 392);
-			this->Controls->Add(this->AddDataPnl);
-			this->Controls->Add(this->IndexPnl);
-			this->Controls->Add(this->RemoveDataPnl);
-			this->Controls->Add(this->AddColumnPnl);
-			this->Controls->Add(this->FilterPnl);
 			this->Controls->Add(this->MenuPnl);
-			this->Controls->Add(this->TableSettingsPnl);
-			this->Controls->Add(this->DataTablePnl);
+			this->Controls->Add(this->TableDgv);
+			this->Controls->Add(this->FilterPnl);
+			this->Controls->Add(this->AddDataPnl);
+			this->Controls->Add(this->TittleTbx);
+			this->Controls->Add(this->AddColumnPnl);
+			this->Controls->Add(this->SaveDataPnl);
+			this->Controls->Add(this->IndexPnl);
 			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"Tabla_Forms";
 			this->Text = L"Tabla_Forms";
 			this->MouseEnter += gcnew System::EventHandler(this, &Tabla_Forms::Tabla_Forms_MouseEnter);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->TableDgv))->EndInit();
-			this->DataTablePnl->ResumeLayout(false);
-			this->DataTablePnl->PerformLayout();
 			this->AddDataPnl->ResumeLayout(false);
 			this->AddDataPnl->PerformLayout();
-			this->RemoveDataPnl->ResumeLayout(false);
-			this->RemoveDataPnl->PerformLayout();
+			this->SaveDataPnl->ResumeLayout(false);
+			this->SaveDataPnl->PerformLayout();
 			this->IndexPnl->ResumeLayout(false);
 			this->IndexPnl->PerformLayout();
 			this->AddColumnPnl->ResumeLayout(false);
 			this->AddColumnPnl->PerformLayout();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->LoadingPbx))->EndInit();
-			this->TableSettingsPnl->ResumeLayout(false);
-			this->TableSettingsPnl->PerformLayout();
 			this->MenuPnl->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
 			this->FilterPnl->ResumeLayout(false);
 			this->FilterPnl->PerformLayout();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -1081,27 +914,8 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			p->Size = Drawing::Size(209, 391);
 		}
 		MenuPnl->Location = Point(-198, 0);
-		ExtraDataCbx->Visible = false;
+		ExtraDataTbx->Visible = false;
 		ExtraDataTxt->Visible = false;
-	}
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		table->Comprobar();
-	}
-	private: System::Void ButtonColumnName_Click(System::Object^ sender, System::EventArgs^ e) {
-		/*nColumn += 1;
-		NroColumnTxt->Text = nColumn.ToString();
-		DataGridViewTextBoxColumn^ CHeader = gcnew DataGridViewTextBoxColumn;
-		CHeader->HeaderText = ColumnNameTbx->Text;
-		this->TableDgv->Columns->Add(CHeader);
-		string type;
-		MarshalString(TypeCbx->Text, type);
-		table->AddColumn(type);
-		ColumnNameTbx->Text = "";
-		DataColumnTxt->Text = "Datos de la Columna " + nColumn;*/
-	}
-	private: System::Void ButtonTableName_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->TitleTableTxt->Text = TableNameTbx->Text;
-		TableNameTbx->Text = "";
 	}
 	private: void MarshalString(String^ s, string& os) {
 		using namespace Runtime::InteropServices;
@@ -1109,42 +923,6 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 			(const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
 		os = chars;
 		Marshal::FreeHGlobal(IntPtr((void*)chars));
-	}
-	private: System::Void button8_Click(System::Object^ sender, System::EventArgs^ e) {
-		setActivePanel(TableSettingsPnl->Name);
-		//panel1->Dock = DockStyle::Fill;
-	}
-	private: void setActivePanel(String^ panelName) {
-		this->TableSettingsPnl->Visible = TableSettingsPnl->Name == panelName;
-		this->DataTablePnl->Visible = DataTablePnl->Name == panelName;
-	}
-
-	private: System::Void button7_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (nColumn > 0) {
-			string d;
-			int n = 0;
-			MarshalString(DataColumnTbx->Text, d);
-
-			/*if (TypeCbx->Text == "letters"){
-				char data = d[0];
-				n = (TableDgv->RowCount <= table->getCharColumns()->getColumn(table->getCharColumns()->Length() - 1)->Length() ?
-					TableDgv->Rows->Add() : table->getCharColumns()->getColumn(table->getCharColumns()->Length() - 1)->Length());
-				table->getCharColumns()->getColumn(table->getCharColumns()->Length() - 1)->Add(data);
-			}
-			else if (TypeCbx->Text == "words"){
-				n = (TableDgv->RowCount <= table->getStringColumns()->getColumn(table->getStringColumns()->Length() - 1)->Length() ?
-					TableDgv->Rows->Add() : table->getStringColumns()->getColumn(table->getStringColumns()->Length() - 1)->Length());
-				table->getStringColumns()->getColumn(table->getStringColumns()->Length() - 1)->Add(d);
-			}
-			else{
-				double data = atoi(d.c_str());
-				n = (TableDgv->RowCount <= table->getDoubleColumns()->getColumn(table->getDoubleColumns()->Length() - 1)->Length() ?
-					TableDgv->Rows->Add() : table->getDoubleColumns()->getColumn(table->getDoubleColumns()->Length() - 1)->Length());
-				table->getDoubleColumns()->getColumn(table->getDoubleColumns()->Length() - 1)->Add(data);
-			}
-			TableDgv->Rows[n]->Cells[nColumn - 1]->Value = DataColumnTbx->Text;
-			DataColumnTbx->Text = "";*/
-		}
 	}
 	private: System::Void IndexBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		string nameColumn;
@@ -1234,9 +1012,9 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 
 		//Agregamos al data grid view
 		if (n != -1) {
-			n = (TableDgv->RowCount <= n ?
+			n = (TableDgv->RowCount < n ?
 				TableDgv->Rows->Add() : n - 1);
-			TableDgv->Rows[n]->Cells[nColumn - 1]->Value = DataTbx->Text;
+			TableDgv->Rows[n]->Cells[getColumnIndex(NameColumnTbx2->Text)]->Value = DataTbx->Text;
 		}
 		DataTbx->Text = "";
 	}
@@ -1265,57 +1043,210 @@ private: System::Windows::Forms::Label^ ExtraDataTxt;
 		indexEnter = 3;
 		timer2->Start();
 	}
+	private: System::Void btnExport_Click(System::Object^ sender, System::EventArgs^ e) {
+		indexExit = indexEnter;
+		indexEnter = 4;
+		timer2->Start();
+	}
 	private: System::Void FilterTypeCbx_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
 		String^ t = FilterTypeCbx->Text;
-		ExtraDataCbx->Visible = true;
+		ExtraDataTbx->Visible = true;
 		ExtraDataTxt->Visible = true;
 		if (t == "Buscar") ExtraDataTxt->Text = "Dato a buscar";
-		else if (t == "Orden ascendente" || t == "Orden descendente") {
-			ExtraDataCbx->Visible = false;
+		else if (t == "Orden ascendente" || t == "Orden descendente" || t == "Ninguno") {
+			ExtraDataTbx->Visible = false;
 			ExtraDataTxt->Visible = false;
-			ExtraDataCbx->Text = "";
+			ExtraDataTbx->Text = "";
 		}
 		else ExtraDataTxt->Text = "Dato a comparar";
 	}
 	private: System::Void FilterBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		string nameColumn; string searcher;
+		string nameColumn2, searcher2;
+		MarshalString(ExtraDataTbx->Text, searcher);
+		MarshalString(NameColumnTbx4->Text, nameColumn);
 		String^ t = FilterTypeCbx->Text;
 		if (t == "Ninguno") return;
 		Tabla_Forms^ auxTable = gcnew Tabla_Forms();
-		auxTable->setDataGridView(this->TableDgv);
-		if (t == "Buscar") {
-
+		if (t != "Ninguno") {
+			auxTable->setTittle(this->TittleTbx->Text);
+			if (t == "Buscar") {
+				for (int i = 0; i < this->TableDgv->ColumnCount; i++) {	//Copio encabezados
+					DataGridViewTextBoxColumn^ CHeader = gcnew DataGridViewTextBoxColumn;
+					CHeader->HeaderText = this->TableDgv->Columns[i]->HeaderText;
+					auxTable->TableDgv->Columns->Add(CHeader);
+				}
+				auxTable->TableDgv->Rows->Add();
+				int row = table->Search(searcher, nameColumn);
+				if (row != -1) {
+					for (int i = 0; i < auxTable->TableDgv->ColumnCount; i++) {
+						auxTable->TableDgv->Rows[0]->Cells[i]->Value = this->TableDgv->Rows[row]->Cells[i]->Value;
+					}
+				}
+				else {
+					for (int i = 0; i < auxTable->TableDgv->ColumnCount; i++) {
+						auxTable->TableDgv->Rows[0]->Cells[i]->Value = "No encontrado";
+					}
+				}
+			}
+			else if (t == "Iguales a") {
+				for (int i = 0; i < this->TableDgv->ColumnCount; i++) {	//Copio encabezados
+					DataGridViewTextBoxColumn^ CHeader = gcnew DataGridViewTextBoxColumn;
+					CHeader->HeaderText = this->TableDgv->Columns[i]->HeaderText;
+					auxTable->TableDgv->Columns->Add(CHeader);
+				}
+				list<int>* rows = table->Equals(searcher, nameColumn);
+				if (rows->size() > 0) {
+					auxTable->TableDgv->Rows->Add(rows->size());
+					for (int i = 0; i < auxTable->TableDgv->RowCount; i++) {
+						for (int j = 0; j < auxTable->TableDgv->ColumnCount; j++) {
+							auxTable->TableDgv->Rows[i]->Cells[j]->Value = this->TableDgv->Rows[rows->front()]->Cells[j]->Value;
+						}
+						rows->pop_front();
+					}
+				}
+				else {
+					auxTable->TableDgv->Rows->Add();
+					for (int i = 0; i < auxTable->TableDgv->ColumnCount; i++) {
+						auxTable->TableDgv->Rows[0]->Cells[i]->Value = "No encontrado";
+					}
+				}
+			}
+			else if (t == "Mayores que") {
+				FilterOf(auxTable->TableDgv, table->GreaterThan(searcher, nameColumn));
+			}
+			else if (t == "Menores que") {
+				FilterOf(auxTable->TableDgv, table->LessThan(searcher, nameColumn));
+			}
+			else if (t == "Contiene") {
+				FilterOf(auxTable->TableDgv, table->Contains(searcher, nameColumn));
+			}
+			else if (t == "No contiene") {
+				FilterOf(auxTable->TableDgv, table->NotContains(searcher, nameColumn));
+			}
+			else if (t == "Empieza con") {
+				FilterOf(auxTable->TableDgv, table->StartWith(searcher, nameColumn));
+			}
+			else if (t == "Termina con") {
+				FilterOf(auxTable->TableDgv, table->EndWith(searcher, nameColumn));
+			}
+			else if (t == "Orden ascendente") {
+				for (int i = 0; i < this->TableDgv->ColumnCount; i++) {	//Copio encabezados
+					DataGridViewTextBoxColumn^ CHeader = gcnew DataGridViewTextBoxColumn;
+					CHeader->HeaderText = this->TableDgv->Columns[i]->HeaderText;
+					auxTable->TableDgv->Columns->Add(CHeader);
+				}
+				list<int>* rows = table->InOrder(nameColumn);
+				if (rows->size() > 0) {
+					auxTable->TableDgv->Rows->Add(rows->size());
+					for (int i = 0; i < auxTable->TableDgv->RowCount; i++) {
+						for (int j = 0; j < auxTable->TableDgv->ColumnCount; j++) {
+							auxTable->TableDgv->Rows[i]->Cells[j]->Value = this->TableDgv->Rows[rows->front()]->Cells[j]->Value;
+						}
+						rows->pop_front();
+					}
+				}
+				else {
+					auxTable->TableDgv->Rows->Add();
+					for (int i = 0; i < auxTable->TableDgv->ColumnCount; i++) {
+						auxTable->TableDgv->Rows[0]->Cells[i]->Value = "No encontrado";
+					}
+				}
+			}
+			else if (t == "Orden descendente") {
+				for (int i = 0; i < this->TableDgv->ColumnCount; i++) {	//Copio encabezados
+					DataGridViewTextBoxColumn^ CHeader = gcnew DataGridViewTextBoxColumn;
+					CHeader->HeaderText = this->TableDgv->Columns[i]->HeaderText;
+					auxTable->TableDgv->Columns->Add(CHeader);
+				}
+				list<int>* rows = table->InReverse(nameColumn);
+				if (rows->size() > 0) {
+					auxTable->TableDgv->Rows->Add(rows->size());
+					for (int i = 0; i < auxTable->TableDgv->RowCount; i++) {
+						for (int j = 0; j < auxTable->TableDgv->ColumnCount; j++) {
+							auxTable->TableDgv->Rows[i]->Cells[j]->Value = this->TableDgv->Rows[rows->front()]->Cells[j]->Value;
+						}
+						rows->pop_front();
+					}
+				}
+				else {
+					auxTable->TableDgv->Rows->Add();
+					for (int i = 0; i < auxTable->TableDgv->ColumnCount; i++) {
+						auxTable->TableDgv->Rows[0]->Cells[i]->Value = "No encontrado";
+					}
+				}
+			}
 		}
-		else if (t == "Iguales a") {
-
-		}
-		else if (t == "Mayores que") {
-
-		}
-		else if (t == "Menores que") {
-
-		}
-		else if (t == "Contiene") {
-
-		}
-		else if (t == "No contiene") {
-
-		}
-		else if (t == "Empieza con") {
-
-		}
-		else if (t == "Termina con") {
-
-		}
-		else if (t == "Orden ascendente") {
-
-		}
-		else if (t == "Orden descendente") {
-
-		}
+		ExtraDataTbx->Text = "";
+		FilterTypeCbx->SelectedItem = FilterTypeCbx->Items[0];
 		auxTable->Show();
 	}
-	public: void setDataGridView(DataGridView^ dgv) {
-		this->TableDgv = dgv;
+	private: int getColumnIndex(String^ columnName) {
+		for (int i = 0; i < TableDgv->ColumnCount; i++) {
+			if (TableDgv->Columns[i]->HeaderText == columnName)
+				return i;
+		}
+		return -1;
+	}
+	public: void setTittle(String^ tittle) {
+		this->TittleTbx->Text = tittle + " (copia)";
+	}
+	private: void FilterOf(DataGridView^aux, list<int>* ro) {
+		for (int i = 0; i < this->TableDgv->ColumnCount; i++) {	//Copio encabezados
+			DataGridViewTextBoxColumn^ CHeader = gcnew DataGridViewTextBoxColumn;
+			CHeader->HeaderText = this->TableDgv->Columns[i]->HeaderText;
+			aux->Columns->Add(CHeader);
+		}
+		list<int>* rows = ro;
+		if (rows->size() > 0) {
+			aux->Rows->Add(rows->size());
+			for (int i = 0; i < aux->RowCount; i++) {
+				for (int j = 0; j < aux->ColumnCount; j++) {
+					aux->Rows[i]->Cells[j]->Value = this->TableDgv->Rows[rows->front()]->Cells[j]->Value;
+				}
+				rows->pop_front();
+			}
+		}
+		else {
+			aux->Rows->Add();
+			for (int i = 0; i < aux->ColumnCount; i++) {
+				aux->Rows[0]->Cells[i]->Value = "No encontrado";
+			}
+		}
+	}
+	private: System::Void SaveBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		table->SaveTable();
+	}
+	private: System::Void AddFilterBtn_Click(System::Object^ sender, System::EventArgs^ e) {
+		label5->Visible = true;
+		FilterTypeCbx2->Visible = true;
+		AddFilterBtn->Visible = false;
+		label9->Location = Point(10, 41);
+		NameColumnTbx4->Location = Point(10, 57);
+		label8->Location = Point(10, 80);
+		FilterTypeCbx->Location = Point(13, 101);
+		ExtraDataTbx->Location = Point(13, 151);
+		ExtraDataTxt->Location = Point(10, 132);
+		label5->Location=Point(10,224);
+		FilterTypeCbx2->Location = Point(13,240);
+		label1->Location = Point(10,178);
+		ExtraDataTbx2->Location = Point(13,192);
+		FilterBtn->Location = Point(36,328);
+		label7->Location = Point(25,9);
+		label1->Visible = true;
+		ExtraDataTbx2->Visible = true;
+}
+	private: System::Void FilterTypeCbx2_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		String^ t = FilterTypeCbx2->Text;
+		textBox2->Visible = true;
+		label10->Visible = true;
+		if (t == "Buscar") label10->Text = "Dato a buscar 2";
+		else if (t == "Orden ascendente" || t == "Orden descendente" || t == "Ninguno") {
+			textBox2->Visible = false;
+			label10->Visible = false;
+			textBox2->Text = "";
+		}
+		else label10->Text = "Dato a comparar 2";
 	}
 };
 }
